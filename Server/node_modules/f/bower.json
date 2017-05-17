@@ -1,0 +1,12 @@
+{
+  "name": "f",
+  "version": "1.0.2",
+  "description": "Functional Microservice Request Library",
+  "main": "web/f.js",
+  "author": "Keith Horwood",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/poly/f.git"
+  },
+  "license": "MIT"
+}
