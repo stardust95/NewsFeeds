@@ -38,29 +38,29 @@ if(isset($_POST['name']))
     <title>Newspaper | Free Bootstrap Themes by 365Bootstrap.com</title>
 	
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css"  type="text/css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"  type="text/css">
 	
 	<!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 	
 	<!-- Owl Carousel Assets -->
-    <link href="owl-carousel/owl.carousel.css" rel="stylesheet">
-    <link href="owl-carousel/owl.theme.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.theme.css" rel="stylesheet">
 	
 	<!-- Custom Fonts -->
-    <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css"  type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"  type="text/css">
 	
 	<!-- jQuery and Modernizr-->
-	<script src="js/jquery-2.1.1.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	
 	<!-- Core JavaScript Files -->  	 
-    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -99,8 +99,8 @@ if(isset($_POST['name']))
 					<div class="dropdown-menu">
 						<div class="dropdown-inner">
 							<ul class="list-unstyled">
-								<li><a href="archive.html">Text 101</a></li>
-								<li><a href="archive.html">Text 102</a></li>
+								<li><a href="/newslist">Text 101</a></li>
+								<li><a href="/newslist">Text 102</a></li>
 							</ul>
 						</div>
 					</div>
@@ -109,11 +109,11 @@ if(isset($_POST['name']))
 					<div class="dropdown-menu">
 						<div class="dropdown-inner">
 							<ul class="list-unstyled">
-								<li><a href="archive.html">Text 201</a></li>
-								<li><a href="archive.html">Text 202</a></li>
-								<li><a href="archive.html">Text 203</a></li>
-								<li><a href="archive.html">Text 204</a></li>
-								<li><a href="archive.html">Text 205</a></li>
+								<li><a href="/newslist">Text 201</a></li>
+								<li><a href="/newslist">Text 202</a></li>
+								<li><a href="/newslist">Text 203</a></li>
+								<li><a href="/newslist">Text 204</a></li>
+								<li><a href="/newslist">Text 205</a></li>
 							</ul>
 						</div> 
 					</div>
@@ -122,30 +122,30 @@ if(isset($_POST['name']))
 					<div class="dropdown-menu" style="margin-left: -203.625px;">
 						<div class="dropdown-inner">
 							<ul class="list-unstyled">
-								<li><a href="archive.html">Text 301</a></li>
-								<li><a href="archive.html">Text 302</a></li>
-								<li><a href="archive.html">Text 303</a></li>
-								<li><a href="archive.html">Text 304</a></li>
-								<li><a href="archive.html">Text 305</a></li>
+								<li><a href="/newslist">Text 301</a></li>
+								<li><a href="/newslist">Text 302</a></li>
+								<li><a href="/newslist">Text 303</a></li>
+								<li><a href="/newslist">Text 304</a></li>
+								<li><a href="/newslist">Text 305</a></li>
 							</ul>
 							<ul class="list-unstyled">
-								<li><a href="archive.html">Text 306</a></li>
-								<li><a href="archive.html">Text 307</a></li>
-								<li><a href="archive.html">Text 308</a></li>
-								<li><a href="archive.html">Text 309</a></li>
-								<li><a href="archive.html">Text 310</a></li>
+								<li><a href="/newslist">Text 306</a></li>
+								<li><a href="/newslist">Text 307</a></li>
+								<li><a href="/newslist">Text 308</a></li>
+								<li><a href="/newslist">Text 309</a></li>
+								<li><a href="/newslist">Text 310</a></li>
 							</ul>
 							<ul class="list-unstyled">
-								<li><a href="archive.html">Text 311</a></li>
-								<li><a href="archive.html">Text 312</a></li>
-								<li><a href="archive.html#">Text 313</a></li>
-								<li><a href="archive.html#">Text 314</a></li>
-								<li><a href="archive.html">Text 315</a></li>
+								<li><a href="/newslist">Text 311</a></li>
+								<li><a href="/newslist">Text 312</a></li>
+								<li><a href="/newslist#">Text 313</a></li>
+								<li><a href="/newslist#">Text 314</a></li>
+								<li><a href="/newslist">Text 315</a></li>
 							</ul>
 						</div>
 					</div>
 				</li>
-				<li><a href="archive.html"><i class="fa fa-cubes"></i> Blocks</a></li>
+				<li><a href="/newslist"><i class="fa fa-cubes"></i> Blocks</a></li>
 				<li><a href="contact.html"><i class="fa fa-envelope"></i> Contact</a></li>
 			</ul>
 			<ul class="list-inline navbar-right top-social">
@@ -525,7 +525,7 @@ if(isset($_POST['name']))
 	<!-- Footer -->
 	
 	<!-- JS -->
-	<script src="owl-carousel/owl.carousel.js"></script>
+	<script src="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.js"></script>
     <script>
     $(document).ready(function() {
       $("#owl-demo").owlCarousel({

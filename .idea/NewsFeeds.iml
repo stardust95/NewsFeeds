@@ -8,5 +8,8 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6.0 (C:\Python36\python.exe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="respond" level="application" />
+    <orderEntry type="library" name="html5shiv" level="application" />
+    <orderEntry type="library" name="owl.carousel" level="application" />
   </component>
 </module>

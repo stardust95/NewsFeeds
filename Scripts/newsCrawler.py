@@ -226,11 +226,23 @@ class Toutiao():
             try:
                 resp = requests.get(url)
                 result = json.loads(resp.text)['data']
+                result = [news for news in result if 'ad' not in news and not news['has_video']]
+                imglist = 'imgurls'
                 for news in result:
                     news['time'] = news['datetime']
-                    news['imgurls'] = []
-                    for item in news['image_list']:
-                        news['imgurls'] = item['url']
+                    news[imglist] = []
+                    for key in ['image_url', 'large_image_url', 'middle_image_url']:
+                        if key in news and news[key] not in news[imglist]:
+                            news[imglist].append(news[key])
+                    for key in ['image_list', 'middle_image']:
+                        if key in news:
+                            if isinstance(news[key], list) or 'url_list' in news[key]:
+                                arr = news[key]['url_list'] if 'url_list' in news[key] else news[key]
+                                for item in arr:
+                                    if item['url'] not in news[imglist]:
+                                        news[imglist].append(item['url'])
+                            elif news[key] not in news[imglist]:
+                                news[imglist].append(news[key])
                     news['keywords'] = news['keywords'].split(',')
                     news['docurl'] = news['url']
                 collection = getConnection('mongo')[type]

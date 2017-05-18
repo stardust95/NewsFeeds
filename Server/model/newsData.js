@@ -27,7 +27,7 @@ class NewsData{
                 skip: offset,
                 sort: ["time"]
             }
-            db.collection(genre).find({}, option).toArray(callback)
+            db.collection(genre).find({"has_video": false}, option).toArray(callback)
         })
     }
 

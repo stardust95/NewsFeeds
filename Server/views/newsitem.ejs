@@ -1,0 +1,38 @@
+<!-- TODO: multiple images in line -->
+<div class="box">
+    <a href="<%= news.docurl %>"><h2 class="vid-name"><%= news.title %></h2></a>
+    <div class="info">
+        <h5>By <a href="#"><%= news.source %></a></h5>
+        <span><i class="fa fa-calendar"></i> <%= news.time %></span>
+        <span><i class="fa fa-comment"></i> <%= news.commentNum %> Comments</span>
+        <span><i class="fa fa-heart"></i><%= news.approval %></span>
+        <ul class="list-inline">
+            <li><a href="#">关键字</a></li>
+            <li> - </li>
+            <% for(let i=0; i<news.keywords.length; i++){ %>
+                <li>
+                    <span><a><%= news.keywords[i] %></a>,</span>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+    <div class="wrap-vid">
+        <% if( news.has_image ){ %>
+            <% if( news.imgurls.length > 1 ) { %>
+                <% for(let index in news.imgurls) { %>
+
+                    <img src="<%= news.imgurls[index] %>"/>
+                <% } %>
+            <% } else { %>
+                <div class="zoom-container">
+                    <div class="zoom-caption">
+                        <img src="<%= news.imgurls[0] %>" />
+                    </div>
+                </div>
+            <% } %>
+        <% } %>
+        <p><%= news.abstract %>
+            <a href="<%= news.docurl %>">更多...</a></p>
+    </div>
+</div>
+<hr class="line">
