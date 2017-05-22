@@ -1,6 +1,6 @@
 var express = require('express');
-var newsData = require('../model/newsData')
-var config = require('../model/config')
+var newsData = require('../scripts/newsData')
+var config = require('../scripts/config')
 var router = express.Router();
 
 
@@ -12,6 +12,27 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// TODO: access login if already login?
+
+router.get('/login', function (req, res, next) {
+    res.render('login', {
+        title: 'Express',
+        genres: config['genres']
+    });
+})
+
+router.get('/register', function (req, res, next) {
+    res.render('register', {
+        title: 'Register',
+        genres: config['genres']
+    })
+})
+
+router.get('/tag/:word', function (req, res, next) {
+    res.render('tagnews', {
+        tag: req.params.word
+    })
+})
 
 let genres = config['genres']
 router.get('/:genre', function (req, res, next) {
@@ -24,5 +45,6 @@ router.get('/:genre', function (req, res, next) {
     else
         res.status(404).send()
 })
+
 
 module.exports = router;

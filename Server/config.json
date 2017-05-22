@@ -1,5 +1,14 @@
 {
-  "connect": "mongodb://123.206.106.195:27017/newslist",
+  "host": "localhost",
+  "port": 3000,
+  "connect": "mongodb://123.206.106.195:27017/",
+  "newsdb": "newslist",
+  "userdb": "userdata",
+  "mailoptions": {
+    "service": "126",
+    "email": "newsfeedregister@126.com",
+    "password": "newsfeed2017"
+  },
   "database": {
     "host": "123.206.106.195",
     "port": 27017,

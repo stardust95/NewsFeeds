@@ -1,4 +1,4 @@
-<!-- TODO: multiple images in line -->
+
 <div class="box">
     <a href="<%= news.docurl %>"><h2 class="vid-name"><%= news.title %></h2></a>
     <div class="info">
@@ -9,9 +9,9 @@
         <ul class="list-inline">
             <li><a href="#">关键字</a></li>
             <li> - </li>
-            <% for(let i=0; i<news.keywords.length; i++){ %>
+            <% for(let i=0; i<news.keywords.length && i < 5; i++){ %>
                 <li>
-                    <span><a><%= news.keywords[i] %></a>,</span>
+                    <span><a href="/news/tag/<%= news.keywords %>"><%= news.keywords[i] %></a><%= i==news.keywords.length-1?"":"," %></span>
                 </li>
             <% } %>
         </ul>
@@ -19,10 +19,13 @@
     <div class="wrap-vid">
         <% if( news.has_image ){ %>
             <% if( news.imgurls.length > 1 ) { %>
-                <% for(let index in news.imgurls) { %>
-
-                    <img src="<%= news.imgurls[index] %>"/>
-                <% } %>
+                <div class="row" style="margin-bottom: 8px">
+                    <% for(let index = 0; index < news.imgurls.length && index < 3; index++) { %>
+                        <div class="col-md-4 col-sm-4 col-lg-4 col-xs-4">
+                            <img src="<%= news.imgurls[index] %>"/>
+                        </div>
+                    <% } %>
+                </div>
             <% } else { %>
                 <div class="zoom-container">
                     <div class="zoom-caption">

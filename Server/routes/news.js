@@ -7,7 +7,7 @@ var ejs = require('ejs');
 
 var router = express.Router();
 
-var News = require('../model/newsData')
+var News = require('../scripts/newsData')
 let newsTemplate = ejs.compile(fs.readFileSync('views/newsitem.ejs', 'utf-8'))
 
 /* GET users listing. */
@@ -27,6 +27,7 @@ router.get('/list/:genre', function (req, res, next) {
                 console.log(err);
                 res.json();
             }else{          // success
+                console.log('result.length = ' + result.length)
                 if( req.query.html ){
                     var ret = ""
                     for(let idx = 0; idx < result.length; idx++){
@@ -41,6 +42,10 @@ router.get('/list/:genre', function (req, res, next) {
     }else{
         res.json({ message: "Invalid Genre" })
     }
+})
+
+router.get('/tag/:word', function (req, res) {
+
 })
 
 module.exports = router;
