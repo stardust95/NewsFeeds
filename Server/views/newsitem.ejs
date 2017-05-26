@@ -11,7 +11,7 @@
             <li> - </li>
             <% for(let i=0; i<news.keywords.length && i < 5; i++){ %>
                 <li>
-                    <span><a href="/news/tag/<%= news.keywords %>"><%= news.keywords[i] %></a><%= i==news.keywords.length-1?"":"," %></span>
+                    <span><a href="/tag/<%= news.keywords[i] %>"><%= news.keywords[i] %></a><%= i==news.keywords.length-1?"":"," %></span>
                 </li>
             <% } %>
         </ul>
@@ -27,10 +27,9 @@
                     <% } %>
                 </div>
             <% } else { %>
+                <div class="item"></div>
                 <div class="zoom-container">
-                    <div class="zoom-caption">
-                        <img src="<%= news.imgurls[0] %>" />
-                    </div>
+                    <img src="<%= news.imgurls[0] %>" />
                 </div>
             <% } %>
         <% } %>

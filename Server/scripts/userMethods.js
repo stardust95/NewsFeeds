@@ -17,7 +17,7 @@ var myHasher = function(password, tempUserData, insertTempUser, callback) {
 };
 
 mongoose.Promise = require('bluebird');
-mongoose.connect(config["connect"] + config["userdb"]);
+mongoose.connect(config["connect"]);
 
 let mailOption = config["mailoptions"]
 console.log(mailOption["email"] + "\n" + mailOption["password"])

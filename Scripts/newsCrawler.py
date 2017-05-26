@@ -12,6 +12,8 @@ HEADERS = {
     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36'''
 }
 
+
+
 def getConnection(section, configName = 'config.ini'):
     config = configparser.RawConfigParser()
     config.read(configName)
@@ -218,6 +220,7 @@ class Toutiao():
             'news_game': 'game',
             'news_history': 'history'
         }
+        self.colName = 'news'
 
     def start(self):
         for (param, type) in self.types.items():
@@ -245,7 +248,8 @@ class Toutiao():
                                 news[imglist].append(news[key])
                     news['keywords'] = news['keywords'].split(',')
                     news['docurl'] = news['url']
-                collection = getConnection('mongo')[type]
+                    news['genre'] = type
+                collection = getConnection('mongo')[self.colName]
                 collection.create_index('title', unique=True)
                 collection.insert(result)
             except errors.DuplicateKeyError:

@@ -18,9 +18,10 @@ router.post('/register', function (req, res, next) {
         fullname: req.body.fullname,
         interest: []
     })
-    console.log(user)
     if( !user.email || !user.password || !user.fullname ){
-        res.json({
+        console.log("body = " + req.body())
+        res.render('info', {
+            title: "Register Failed",
             message: "Invalid Fields"
         })
         return;
@@ -29,17 +30,18 @@ router.post('/register', function (req, res, next) {
         // some sort of error
         if (err){
             console.log(err)
-            res.json({
-                message: "Internal Error"
+            res.render('info', {
+                title: "Error",
+                message: 'Internal Error' // ! as TempUser
             })
             return;
         }
 
         // user already exists in persistent collection...
         if (existingPersistentUser){
-            console.log(existingPersistentUser)
-            res.json({
-                message: 'Email Already Exists'
+            res.render("info", {
+                title: "Notice",
+                message: 'Email Already Exists' // ! as TempUser
             })
             return;
         }
@@ -51,18 +53,18 @@ router.post('/register', function (req, res, next) {
             nev.sendVerificationEmail(user.email, URL, function(err, info) {
                 if (err){
                     console.log(err)
-                    res.json()
+                    res.status(500).json()
                 }else {
-                    res.json({
-                        success: true,
-                        message: info
+                    res.status(201).render("info", {
+                        title: "Notice",
+                        message: "Verification Mail Sended"
                     })
                 }
             });
             // user already exists in temporary collection...
         } else {
-            console.log(user.email + " register failed")
-            res.json({
+            res.render("info", {
+                title: "Register Failed",
                 message: 'Email Already Exists' // ! as TempUser
             })
             // flash message of failure...
@@ -74,16 +76,20 @@ router.post('/register/resend', function (req, res, next) {
     nev.resendVerificationEmail(req.body.email, function (err, userFound) {
         if (err){
             console.log(err)
+            res.status(500).json()
             return;
         }
         // handle error...
 
         if (userFound) {
-            res.json({
+            res.render("info", {
+                title: "Notice",
+                message: "Verification mail has been sended",
                 success: true
             })
         }else{
-            res.j({
+            res.render("info", {
+                title: "Error",
                 message: "Internal Error"
             })
         }
@@ -106,10 +112,7 @@ router.get('/email-verification/:url', function (req, res) {
                     })
                 }else {
                     res.cookie('user', new Buffer(user.email).toString('base64'))        // automatically login
-                    res.json({
-                        success: true,
-                        message: info
-                    })
+                    res.redirect('/')       // redirect to home page
                 }
             })
         }
@@ -117,7 +120,7 @@ router.get('/email-verification/:url', function (req, res) {
 })
 
 router.post('/login', function (req, res, next) {
-  UserData.findByEmail(req.body.email, function (err, result) {
+  User.findOne({ email: req.body.email }, function (err, result) {
       if( err ){
         console.log(err)
       }else {
@@ -126,9 +129,7 @@ router.post('/login', function (req, res, next) {
         }else{
           // TODO: login status cookie
           res.cookie('user', 'TODO')
-          res.json({
-              success: true
-          })
+          res.redirect('/')
         }
       }
   })

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- Owl Carousel Assets -->
     <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.css" rel="stylesheet">
@@ -30,7 +30,7 @@
     <![endif]-->
 </head>
 
-<body onload="mewslistOnload()">
+<body>
 <header>
     <% include layout %>
 </header>
@@ -41,13 +41,15 @@
 <div id="page-content" class="archive-page container">
     <div class="">
         <div class="row">
+
             <div id="main-content" class="col-md-8">
+                <h3><%= title %></h3>
                 <!-- Programmatically fill -->
-                <div class="loadbutton text-center">
-                    <button id="readmoreBtn" onclick="appendNewsList()" class="btn btn-block btn-social btn-flat btn-facebook">
-                        加载更多
-                    </button>
-                </div>
+                <% var news = {} %>
+                <% for(let i in list){ %>
+                    <% news = list[i] %>
+                    <% include newsitem.ejs %>
+                <% } %>
             </div>
             <div id="sidebar" class="col-md-4">
                 <% include featured-sidebar.ejs %>
@@ -63,8 +65,6 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-    let tag = "<%= tag %>"
-    let genre = "<%= genre %>"
     $(document).ready(function() {
         $("#owl-demo").owlCarousel({
             autoPlay: 3000,
@@ -72,10 +72,11 @@
             itemsDesktop : [1199,4],
             itemsDesktopSmall : [979,4]
         });
+
     });
 </script>
 <!-- JS -->
 <script src="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.js"></script>
-<script src="/javascripts/newsfeeds.js"></script>
+<script src="javascripts/newsfeeds.js"></script>
 </body>
 </html>
