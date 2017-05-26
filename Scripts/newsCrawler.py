@@ -12,8 +12,6 @@ HEADERS = {
     AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36'''
 }
 
-
-
 def getConnection(section, configName = 'config.ini'):
     config = configparser.RawConfigParser()
     config.read(configName)
@@ -249,6 +247,7 @@ class Toutiao():
                     news['keywords'] = news['keywords'].split(',')
                     news['docurl'] = news['url']
                     news['genre'] = type
+                    news['uploaded'] = False
                 collection = getConnection('mongo')[self.colName]
                 collection.create_index('title', unique=True)
                 collection.insert(result)

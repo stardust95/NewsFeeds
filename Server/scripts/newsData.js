@@ -26,7 +26,13 @@ function getJSON(options, onResult) {
         });
 
         res.on('end', function() {
-            var obj = JSON.parse(output);
+            try{
+                var obj = JSON.parse(output);
+            }catch (err){
+                console.log("url = " + req.url )
+                console.log("error = " + err)
+                var obj = {}
+            }
             onResult(res.statusCode, obj);
         });
     });
@@ -39,15 +45,6 @@ function getJSON(options, onResult) {
     req.end();
 }
 
-let option = {
-    host: "m.toutiao.com",
-    port: 80,
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-}
-
 class NewsData{
 
     static validGenre(genre){
@@ -57,7 +54,7 @@ class NewsData{
     static search(keyword, callback){
         MongoClient.connect(connectStr, function (err, db) {
             if( err ){
-                console.log(err)
+                return console.log(err)
             }else{
                 let option = {
                     sort: {"time": -1}
@@ -79,7 +76,7 @@ class NewsData{
             limit = 10
         MongoClient.connect(connectStr, function (err, db) {
             if( err ){
-                console.log(err)
+                return console.log(err)
             }else{
                 let option = {
                     limit: limit,
@@ -99,18 +96,45 @@ class NewsData{
     }
 
     static getContent(id, callback){
-        let opt = option
-        opt.path = id.replace('/item/', '/i') + 'info/',
+        let opt = {
+            host: "m.toutiao.com",
+            port: 80,
+            method: 'GET',
+            path: id.replace('/item/', '/i').replace('info/', '') + 'info/',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        console.log("path = " + opt.host + opt.path)
         getJSON(opt, callback)
     }
 
+    static getNews(title, callback){
+        MongoClient.connect(connectStr, function (err, db) {
+            if( err ){
+                return console.log(err)
+            }else{
+                let selector = {
+                    title: title
+                }
+                db.collection(collection).findOne(selector, callback)
+            }
+        })
+    }
+
     static getComment(group, item, callback){
-        let opt = option
-        opt.host = "www.toutiao.com"
-        opt.path = "/api/comment/list/?" + querystring.stringify({
+        let opt = {
+            host: "www.toutiao.com",
+            port: 80,
+            method: 'GET',
+            path: "/api/comment/list/?" + querystring.stringify({
                 group_id: group,
                 item_id: item
-            })
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
         getJSON(opt, callback)
     }
 

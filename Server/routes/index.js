@@ -3,20 +3,20 @@ var newsData = require('../scripts/newsData')
 var config = require('../scripts/config')
 var router = express.Router();
 
-// TODO: tag, imgs
-function getPublicContent() {
-
-}
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', {
-      title: 'Express',
-      genres: config['genres']
-  });
+    console.log(req.session.user)
+    res.render('index', {
+      title: "NewsFeeds",
+      genre: "hot",
+      tag: null
+    });
 });
 
-// TODO: access login if already login?
+/*  TODO: access login if already login? ==> session
+*   TODO: cognitive api
+ *  TODO:
+*/
 
 router.get('/login', function (req, res, next) {
     res.render('login', {
@@ -31,8 +31,7 @@ router.get('/register', function (req, res, next) {
 })
 
 router.get('/tag/:word', function (req, res, next) {
-    res.render('newslist', {
-        genres: config['genres'],
+    res.render('newslistpage', {
         title: req.params.word,
         tag: req.params.word,
         genre: null
@@ -66,11 +65,12 @@ router.get('/info', function (req, res) {
     })
 })
 
+
 let genres = config['genres']
 router.get('/:genre', function (req, res, next) {
     if( newsData.validGenre(req.params.genre) )
-        res.render('newslist', {
-            genres: config['genres'],
+        res.render('newslistpage', {
+            genres: genres,
             title: genres[req.params.genre],
             genre: req.params.genre,
             tag: null
@@ -78,6 +78,8 @@ router.get('/:genre', function (req, res, next) {
     else
         res.status(404).send()
 })
+
+
 
 
 

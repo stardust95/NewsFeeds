@@ -120,19 +120,26 @@ router.get('/email-verification/:url', function (req, res) {
 })
 
 router.post('/login', function (req, res, next) {
-  User.findOne({ email: req.body.email }, function (err, result) {
+    let email = req.body.email
+    User.findOne({ email: email }, function (err, result) {
       if( err ){
         console.log(err)
       }else {
-        if( result.length == 0 ){   // user not exist
+        if( !result ){   // user not exist
           res.json({message: 'Email Not Exist'})
         }else{
           // TODO: login status cookie
-          res.cookie('user', 'TODO')
-          res.redirect('/')
+            if( result.validPassword(req.body.password) ){      // success
+                req.session.user = result
+                console.log("login success: " + result)
+                // res.json({ success: true })
+                res.redirect('/')
+            }else{
+                res.json({ message: 'Incorrect Password' })
+            }
         }
       }
-  })
+    })
 })
 
 module.exports = router;

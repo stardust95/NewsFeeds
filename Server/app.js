@@ -5,10 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors')
+var session = require('express-session')
+var randomstring = require("randomstring")
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var news = require('./routes/news');
+
+var config = require('./scripts/config')
 
 var app = express();
 
@@ -24,6 +28,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(cors())
+app.use(session({
+    secret: randomstring.generate({
+        length: 128,
+        charset: 'alphabetic'
+    }),
+    cookie: {
+        maxAge: 6000*1000
+    },
+    resave: true,
+    saveUninitialized: true
+}))
+app.use(function (req, res, next) {
+    res.locals.user = req.session.user
+    res.locals.genres = config["genres"]
+    next()
+})
 
 app.use('/', index);
 app.use('/users', users);

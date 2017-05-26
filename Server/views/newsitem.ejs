@@ -1,6 +1,6 @@
 
 <div class="box">
-    <a href="<%= news.docurl %>"><h2 class="vid-name"><%= news.title %></h2></a>
+    <a href="/news/<%= news.title %>"><h2 class="vid-name"><%= news.title %></h2></a>
     <div class="info">
         <h5>By <a href="#"><%= news.source %></a></h5>
         <span><i class="fa fa-calendar"></i> <%= news.time %></span>
@@ -27,14 +27,12 @@
                     <% } %>
                 </div>
             <% } else { %>
-                <div class="item"></div>
                 <div class="zoom-container">
-                    <img src="<%= news.imgurls[0] %>" />
+                    <img src="<%= news.imgurls[0] %>" class="img-responsive center-block"/>
                 </div>
             <% } %>
         <% } %>
-        <p><%= news.abstract %>
-            <a href="<%= news.docurl %>">更多...</a></p>
+        <p><%= news.abstract %><a href="/news/<%= news.title %>">更多...</a></p>
     </div>
 </div>
 <hr class="line">

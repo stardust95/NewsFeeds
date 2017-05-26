@@ -1,3 +1,7 @@
 body{
     background-image: url('../images/bg2.jpg') !important;
 }
+
+#main-content img{
+    margin: 0 auto;
+}

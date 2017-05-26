@@ -13,10 +13,12 @@
     "ejs": "^2.5.6",
     "email-verification": "^0.4.6",
     "express": "~4.14.1",
+    "express-session": "^1.15.3",
     "http": "0.0.0",
     "jade": "~1.11.0",
     "mongodb": "^2.2.26",
     "morgan": "~1.7.0",
+    "randomstring": "^1.1.5",
     "redis": "^2.7.1",
     "serve-favicon": "~2.3.2"
   }

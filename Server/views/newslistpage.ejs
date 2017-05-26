@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
+    <meta name="author" content="http://www.365bootstrap.com">
+
+    <title><%= title %>新闻 | Free Bootstrap Themes by 365Bootstrap.com</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Owl Carousel Assets -->
+    <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.theme.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body onload="newslistOnload()">
+<header>
+    <% include layout %>
+</header>
+
+<% include featured-container.ejs %>
+
+<!-- /////////////////////////////////////////Content -->
+<div id="page-content" class="archive-page container">
+    <div class="row">
+        <div id="main-content" class="col-md-8">
+            <% include newslist.ejs %>
+        </div>
+        <div id="sidebar" class="col-md-4">
+            <% include featured-sidebar.ejs %>
+        </div>
+    </div>
+</div>
+
+<% include footer.ejs %>
+
+<!-- jQuery 2.2.3 -->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#owl-demo").owlCarousel({
+            autoPlay: 3000,
+            items : 5,
+            itemsDesktop : [1199,4],
+            itemsDesktopSmall : [979,4]
+        });
+    });
+</script>
+<!-- JS -->
+<script src="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.js"></script>
+<script src="/javascripts/newsfeeds.js"></script>
+</body>
+</html>

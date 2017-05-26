@@ -19,8 +19,12 @@
     "user": "",
     "password": ""
   },
+  "api": {
+    "modelid": "28f64f3a-84a8-4f6d-889b-6c738d284aad",
+    "28f64f3a-84a8-4f6d-889b-6c738d284aad": "https://westus.api.cognitive.microsoft.com/recommendations/v4.0",
+    "token": "62155e00332a4a62afbfe6478c8c9212"
+  },
   "genres": {
-    "aviation": "航空",
     "car": "汽车",
     "discover": "探索",
     "domestic": "国内",

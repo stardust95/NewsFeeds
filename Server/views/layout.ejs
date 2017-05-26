@@ -9,7 +9,14 @@
             <div class="col-md-6">
                 <ul class="list-inline top-link link">
                     <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
-                    <li><a href="/login"><i class="fa fa-comments"></i> Login</a></li>
+                    <% console.log(user) %>
+                    <% if( user ) { %>
+                        <li><a href="/users/info"><i class="fa fa-user"></i> <%= user.email %></a></li>
+                        <li><a href="/logout"><i class="fa fa-comments"></i> Logout</a></li>
+
+                    <% }else { %>
+                        <li><a href="/login"><i class="fa fa-comments"></i> Login</a></li>
+                    <% } %>
                     <li><a href="#"><i class="fa fa-question-circle"></i> FAQ</a></li>
                 </ul>
             </div>
@@ -55,10 +62,11 @@
                 <div class="dropdown-menu" style="margin-left: -203.625px;">
                     <div class="dropdown-inner">
                         <% let rowsPerCol = 5, keys = Object.keys(genres) %>
+                        <% keys = keys.splice(keys.splice(keys.indexOf('hot'), 1)) %>
                         <% for(let col=0; col < keys.length / rowsPerCol; col++) { %>
                             <ul class="list-unstyled">
                                 <% for(let row=0; row<5; row++) { %>
-                                <li><a href="<%= keys[col * rowsPerCol + row] %>"><%= genres[keys[col * rowsPerCol + row]] %></a></li>
+                                <li><a href="/<%= keys[col * rowsPerCol + row] %>"><%= genres[keys[col * rowsPerCol + row]] %></a></li>
                                 <% } %>
                             </ul>
                         <% } %>

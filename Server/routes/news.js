@@ -5,17 +5,21 @@ var express = require('express');
 var fs = require('fs');
 var ejs = require('ejs');
 var redisClient = require('../scripts/redisdb')
-
+var config = require('../scripts/config')
 var router = express.Router();
 
 var News = require('../scripts/newsData')
 let newsTemplate = ejs.compile(fs.readFileSync('views/newsitem.ejs', 'utf-8'))
+let commentTemplate = ejs.compile(fs.readFileSync('views/commentitem.ejs', 'utf-8'))
 
-let expireTime = 60 // expire after 60 seconds
+let expireTime = 1 // expire after 60 seconds
 let expireFlag = "EX"
 
-function cache(key, value) {
-    redisClient.set(key, value, expireFlag, expireTime)
+function cache(key, value, notExpire, time) {
+    if( notExpire )
+        return redisClient.set(key, value)
+    else
+        return redisClient.set(key, value, expireFlag, time ? time : expireTime)
 }
 
 /* GET users listing. */
@@ -40,7 +44,6 @@ router.get('/list', function (req, res, next) {
         return;
     }
     if( tag || (genre && News.validGenre(genre)) ){
-
         // check redis
         let key = JSON.stringify({
             tag: tag,
@@ -52,10 +55,10 @@ router.get('/list', function (req, res, next) {
         redisClient.get(key, function (err, reply) {
             if( err ){
                 console.log(err)
-                return res.json({ message: "redis error"})
+                res.json({ message: "redis error"})
             }else if( reply ){
-                console.log("reply")
-                return res.json(JSON.parse(reply))
+                console.log("redis hit")
+                return res.send(reply)
             }else{
                 News.getList(genre, tag, (err, result) => {
                     if( err ){
@@ -72,7 +75,6 @@ router.get('/list', function (req, res, next) {
                                 size: result.length,
                                 html: ret
                             }
-
                             cache(key, JSON.stringify(ret))
                             res.json(ret)
                         }else{
@@ -105,11 +107,12 @@ router.get('/content', function (req, res) {
                     message: "redis error"
                 })
             }else if( reply ){
-                return res.json(JSON.parse(reply))
+                console.log("redis hit")
+                return res.send(reply)
             }else{
                 News.getContent(id, function (statusCode, result) {
                     if( statusCode == 200 ){
-                        cache(key, JSON.stringify(result))
+                        cache(key, JSON.stringify(result), true)        // not expire
                         res.json(result)
                     }else{
                         res.status(statusCode).json({})
@@ -121,14 +124,19 @@ router.get('/content', function (req, res) {
 })
 
 router.get('/comments', function (req, res) {
-    let group = req.query.group
-    let item = req.query.item
+    let group = req.query.group_id
+    let item = req.query.item_id
     if( !group || !item ){
         return res.status(404).json({})
     }else {
         News.getComment(group, item, function (statusCode, result) {
             if( statusCode == 200 ){
-                res.json(result)
+                result = result.data.comments
+                var ret = ''
+                for(let index in result){
+                    ret += commentTemplate({ comment: result[index] })
+                }
+                res.send(ret)
             }else{
                 res.status(statusCode).json({})
             }
@@ -151,6 +159,52 @@ router.get('/tags', function (req, res) {
     })
 })
 
+// get news object
+let genres = config['genres']
+router.get('/:title', function (req, res) {
+    let title = req.params.title
+    if( !title ){
+        return res.status(404).json({})
+    }
+    let key = JSON.stringify({
+        type: "news",
+        title: title
+    })
+    console.log("key = " + key)
+    // use redis to get news object
+    redisClient.get(key, function (err, reply) {
+        if( err ){
+            console.log(err)
+            res.status(500).json({ message: "redis error"})
+        }else if( reply ){
+            console.log("redis hit")
+            res.render('newspage', {
+                genres: genres,
+                news: JSON.parse(reply)
+            })
+        }else{
+            News.getNews(title, function (err, result) {
+                if( err ){
+                    console.log(err)
+                    res.status(500).json({})
+                }else if( result ){
+                    console.log("seo_url = " + result.item_seo_url)
+                    cache(key, JSON.stringify(result), true)        // news content not expire
+                    // res.json(result)
+                    res.render('newspage', {
+                        genres: genres,
+                        news: result
+                    })
+                }else{
+                    res.status(404).render('error', {
+                        status: 404,
+                        message: "Page Not Found"
+                    })
+                }
+            })
+        }
+    })
+})
 
 
 module.exports = router;

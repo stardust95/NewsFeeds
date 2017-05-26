@@ -7,17 +7,23 @@
     <meta name="description" content="Free Bootstrap Themes by 365Bootstrap dot com - Free Responsive Html5 Templates">
     <meta name="author" content="http://www.365bootstrap.com">
 
-    <title>Newspaper | Free Bootstrap Themes by 365Bootstrap.com</title>
+    <title><%= news.title %></title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"  type="text/css">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/newsfeed.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+
     <!-- Owl Carousel Assets -->
     <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.theme.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
 
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"  type="text/css">
@@ -27,99 +33,54 @@
 
     <!-- Core JavaScript Files -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-
-    <!--<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">-->
     <![endif]-->
 </head>
 
-<body onload="homepageOnload()">
+<body onload="newspageOnload()">
 <header>
-
     <% include layout.ejs %>
-
 </header>
 
-<% include index-featured-container.ejs %>
+<!-- Header -->
 
 <!-- /////////////////////////////////////////Content -->
-<div id="page-content" class="index-page container">
+<div id="page-content" class="single-page container">
     <div class="row">
-        <div id="main-content"><!-- background not working -->
-            <div class="col-md-8">
-                <% include newslist.ejs %>
-            </div>
+        <div id="main-content" class="col-md-8">
+            <% include newscontent.ejs %>
+
         </div>
-
-        <div id="sidebar">
-
-            <% include public-sidebar.ejs %>
-
+        <div id="sidebar" class="col-md-4">
+            <!---- Start Widget ---->
+            <% include featured-sidebar.ejs %>
         </div>
     </div>
 </div>
 
 <% include footer.ejs %>
 
+<!-- Footer -->
+
 <!-- JS -->
 <script src="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.js"></script>
 <script>
+    let news = JSON.parse('<%- JSON.stringify(news) %>')
     $(document).ready(function() {
-        $("#owl-demo-1").owlCarousel({
+        $("#owl-demo").owlCarousel({
             autoPlay: 3000,
-            items : 1,
-            itemsDesktop : [1199,1],
-            itemsDesktopSmall : [400,1]
-        });
-        $("#owl-demo-2").owlCarousel({
-            autoPlay: 3000,
-            items : 3,
-
+            items : 5,
+            itemsDesktop : [1199,4],
+            itemsDesktopSmall : [979,4]
         });
     });
 </script>
-
 <script src="/javascripts/newsfeeds.js"></script>
-<script type="text/javascript" src="/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 
-<script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        //language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        showMeridian: 1
-    });
-    $('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-    $('.form_time').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 1,
-        minView: 0,
-        maxView: 1,
-        forceParse: 0
-    });
-</script>
 </body>
 </html>

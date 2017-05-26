@@ -6,12 +6,41 @@ var offset = 0;
 let limit = 10;
 
 
-function mewslistOnload() {
-    appendNewsList();
-}
+/*
+ * Public functions
+ * */
 
 function isSuccess(status) {
     return status === "success"
+}
+
+/*
+* Onload functions
+* */
+
+function homepageOnload() {
+    appendNewsList()
+}
+
+function newslistOnload() {
+    appendNewsList();
+}
+
+function newspageOnload() {
+    $.get('/news/content?' + $.param({ id: news.item_seo_url }),
+    function (data, status) {
+        if( isSuccess(status) ){
+            // $('.newscontent').append(data.data.content)
+            $(data.data.content).insertBefore('.newscontent .share')
+            $('.newscontent img').addClass("img-responsive center-block")
+        }
+    })
+    $.get('/news/comments?' + $.param({ group_id: news.group_id, item_id: news.item_id }),
+    function (data, status) {
+        if( isSuccess(status) ){
+            $('.box-comments').append(data)
+        }
+    })
 }
 
 function onLoginClick() {
@@ -20,9 +49,7 @@ function onLoginClick() {
 
 
 function loadContent() {
-    $.get('http://m.toutiao.com/i6364969235889783298/info/', function (data, status) {
-        console.log(data)
-    })
+
 }
 
 
@@ -92,11 +119,41 @@ function loadComments(news) {
     }
 }
 
-function hotComments() {
 
+function uploadUsage() {
+    let params = {
+        modelId: ""
+    }
+    let body = {
+        "userId": "string",
+        "buildId": 0,
+        "events": [
+            {
+                "eventType": "Click",
+                "itemId": "string",
+                "timestamp": "string",
+                "count": 0,
+                "unitPrice": 0.0
+            }
+        ]
+    }
+    $.ajax({
+        url: "https://westus.api.cognitive.microsoft.com/recommendations/v4.0/models/28f64f3a-84a8-4f6d-889b-6c738d284aad/usage/events?"
+            + $.param(params),
+        beforeSend: function(xhrObj){
+            // Request headers
+            xhrObj.setRequestHeader("Content-Type","application/json");
+            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key","62155e00332a4a62afbfe6478c8c9212");
+        },
+        type: "POST",
+        // Request body
+        data: body,
+    }).done(function(data) {
+        console.log("update success")
+    }).fail(function() {
+        alert("update error");
+    });
 }
-
-
 
 /*
 * Content loading functions invoke
