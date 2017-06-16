@@ -15,6 +15,11 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css">
 
+    <link rel="stylesheet" href="/css/newsfeed.css">
+
+    <!-- Theme style -->
+    <!--<link rel="stylesheet" href="/dist/css/AdminLTE.min.css">-->
+
     <!-- Owl Carousel Assets -->
     <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.carousel.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/owl-carousel/1.32/owl.theme.css" rel="stylesheet">
@@ -39,14 +44,18 @@
 
 <!-- /////////////////////////////////////////Content -->
 <div id="page-content" class="archive-page container">
-    <div class="row">
+    <!--<div class="row">-->
+
         <div id="main-content" class="col-md-8">
-            <% include newslist.ejs %>
+            <div class="box">
+
+                <% include newslist.ejs %>
+            </div>
         </div>
         <div id="sidebar" class="col-md-4">
             <% include featured-sidebar.ejs %>
         </div>
-    </div>
+    <!--</div>-->
 </div>
 
 <% include footer.ejs %>

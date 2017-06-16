@@ -4,8 +4,7 @@
 
 var offset = 0;
 let limit = 10;
-
-
+let endpoint = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0"
 /*
  * Public functions
  * */
@@ -14,16 +13,37 @@ function isSuccess(status) {
     return status === "success"
 }
 
+function changeButton(type) {
+    switch (type){
+        case 'load':
+            $('#readmoreBtn').prop("disabled", false)
+            $('#readmoreBtnText').text("")
+            $('.overlay').css("display", "inherit")
+            break;
+        case 'more':
+            $('.overlay').css("display", "none")
+            $('#readmoreBtn').prop("disabled", false)
+            $('#readmoreBtnText').text("加载更多")
+            break;
+        case 'end':
+            $('.overlay').css("display", "none")
+            $('#readmoreBtn').prop("disabled", true)
+            $('#readmoreBtnText').text("已无更多")
+            break;
+    }
+}
+
 /*
 * Onload functions
 * */
 
 function homepageOnload() {
-    appendNewsList()
+    appendNewsList();
 }
 
 function newslistOnload() {
     appendNewsList();
+
 }
 
 function newspageOnload() {
@@ -41,12 +61,13 @@ function newspageOnload() {
             $('.box-comments').append(data)
         }
     })
+
+    getRelatedNews();
 }
 
 function onLoginClick() {
 
 }
-
 
 function loadContent() {
 
@@ -75,7 +96,8 @@ function appendNewsList() {
         limit: limit,
         genre: genre,
         tag: tag
-    })
+    });
+    changeButton('load');
     $.get('/news/list?' + query, (data, status) => {
         // console.log(data)
         if( isSuccess(status) ){
@@ -83,8 +105,9 @@ function appendNewsList() {
             $(data.html).insertBefore('.loadbutton');
             // $('#main-content').insertBefore(data);
             if( data.size < limit ){
-                $('#readmoreBtn').prop("disabled", true)
-                $('#readmoreBtn').text("已无更多")
+                changeButton('end')
+            }else{
+                changeButton('more')
             }
         }
     })
@@ -119,6 +142,14 @@ function loadComments(news) {
     }
 }
 
+function getRelatedNews() {
+    $.get('/news/related/'+news._id, function (data, status) {
+        if( isSuccess(status) ){
+            console.log(data);
+            $('.wid-post .content').append(data)
+        }
+    })
+}
 
 function uploadUsage() {
     let params = {

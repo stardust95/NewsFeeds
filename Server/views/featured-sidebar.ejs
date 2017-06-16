@@ -35,127 +35,35 @@
 </div>
 <!---- Start Widget ---->
 <div class="widget wid-post">
-    <div class="heading"><h4>Category</h4></div>
-    <div class="content">
-        <div class="post wrap-vid">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span class="youtube">Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/1.jpg" />
-            </div>
-            <div class="wrapper">
-                <h5 class="vid-name"><a href="#">Video's Name</a></h5>
-                <div class="info">
-                    <h6>By <a href="#">Kelvin</a></h6>
-                    <span><i class="fa fa-calendar"></i>25/3/2015</span>
-                    <span><i class="fa fa-heart"></i>1,200</span>
-                </div>
-            </div>
-        </div>
-        <div class="post wrap-vid">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span class="vimeo">Vimeo</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/2.jpg" />
-            </div>
-            <div class="wrapper">
-                <h5 class="vid-name"><a href="#">Video's Name</a></h5>
-                <div class="info">
-                    <h6>By <a href="#">Kelvin</a></h6>
-                    <span><i class="fa fa-calendar"></i>25/3/2015</span>
-                    <span><i class="fa fa-heart"></i>1,200</span>
-                </div>
-            </div>
-        </div>
-        <div class="post wrap-vid">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span class="youtube">Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/3.jpg" />
-            </div>
-            <div class="wrapper">
-                <h5 class="vid-name"><a href="#">Video's Name</a></h5>
-                <div class="info">
-                    <h6>By <a href="#">Kelvin</a></h6>
-                    <span><i class="fa fa-calendar"></i>25/3/2015</span>
-                    <span><i class="fa fa-heart"></i>1,200</span>
-                </div>
-            </div>
-        </div>
+    <div class="heading"><h4>Related News</h4></div>
+    <div class="content archive-page">
     </div>
 </div>
 <!---- Start Widget ---->
+
+<% if( scrollNews ){ %>
 <div class="widget ">
     <div class="heading"><h4>Top News</h4></div>
     <div class="content">
-        <div class="wrap-vid">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span class="vimeo">Vimeo</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
+        <% for(var i=0; i<scrollNews.length && i < 5; i++){ %>
+            <div class="wrap-vid">
+                <div class="zoom-container">
+                    <div class="zoom-caption">
+                        <span class="vimeo">Hot</span>
+                        <a href="/news/<%= scrollNews[i].title %>">
+                            <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
+                        </a>
+                        <!--<p>Video's Name</p>-->
+                    </div>
+                    <img src="<%= scrollNews[i].imgurls[0] %>" />
                 </div>
-                <img src="/images/1.jpg" />
-            </div>
-            <h3 class="vid-name"><a href="#">Video's Name</a></h3>
-            <div class="info">
-                <h5>By <a href="#">Kelvin</a></h5>
-                <span><i class="fa fa-calendar"></i>25/3/2015</span>
-                <span><i class="fa fa-heart"></i>1,200</span>
-            </div>
-        </div>
-        <div class="wrap-vid">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span class="vimeo">Vimeo</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
+                <h3 class="vid-name"><a href="/news/<%= scrollNews[i].title %>"><%= scrollNews[i].title %></a></h3>
+                <div class="info">
+                    <span><i class="fa fa-calendar"></i><%= scrollNews[i].time %></span>
+                    <span><i class="fa fa-heart"></i><%= scrollNews[i].comments_count %></span>
                 </div>
-                <img src="/images/2.jpg" />
             </div>
-            <h3 class="vid-name"><a href="#">Video's Name</a></h3>
-            <div class="info">
-                <h5>By <a href="#">Kelvin</a></h5>
-                <span><i class="fa fa-calendar"></i>25/3/2015</span>
-                <span><i class="fa fa-heart"></i>1,200</span>
-            </div>
-        </div>
-        <div class="wrap-vid">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span class="vimeo">Vimeo</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/3.jpg" />
-            </div>
-            <h3 class="vid-name"><a href="#">Video's Name</a></h3>
-            <div class="info">
-                <h5>By <a href="#">Kelvin</a></h5>
-                <span><i class="fa fa-calendar"></i>25/3/2015</span>
-                <span><i class="fa fa-heart"></i>1,200</span>
-            </div>
-        </div>
+        <% } %>
     </div>
 </div>
+<% } %>

@@ -8,8 +8,7 @@ from pymongo import *
 HEADERS = {
     'Accept':'text/html',
     # 'Connection':'keep-alive',
-    'User-Agent': '''Mozilla/5.0 (Windows NT 10.0; Win64; x64)
-    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36'''
+    'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
 }
 
 def getConnection(section, configName = 'config.ini'):
@@ -167,7 +166,7 @@ class showapi():
         '社会': 'society',
         '健康': 'health',
         '房产': 'estate',
-        '数码': 'mobile'
+        '数码': 'mobile',
         }
         self.params = {
             'showapi_appid': '38146',
@@ -200,7 +199,7 @@ class showapi():
 
 class Toutiao():
     def __init__(self):
-        self.url = 'http://toutiao.com/api/article/recent/?source=2&category=%s&as=A1D5D87595C3287'
+        self.url = 'http://toutiao.com/api/article/recent/?source=2&category=%s&as=A1D5D87595C3287&count=50'
         self.types = {
             'news_hot': 'hot',
             'news_society': 'society',
@@ -216,7 +215,9 @@ class Toutiao():
             'news_discovery': 'discovery',
             'news_regimen': 'health',
             'news_game': 'game',
-            'news_history': 'history'
+            'news_history': 'history',
+            'news_food': 'food',
+            'news_discovery': 'discovery'
         }
         self.colName = 'news'
 
@@ -225,10 +226,11 @@ class Toutiao():
             url = self.url % param
             print('url=', url)
             try:
-                resp = requests.get(url)
+                resp = requests.get(url, headers=HEADERS)
                 result = json.loads(resp.text)['data']
                 result = [news for news in result if 'ad' not in news and not news['has_video']]
                 imglist = 'imgurls'
+                print("news.len = " + str(len(result)))
                 for news in result:
                     news['time'] = news['datetime']
                     news[imglist] = []
@@ -248,9 +250,11 @@ class Toutiao():
                     news['docurl'] = news['url']
                     news['genre'] = type
                     news['uploaded'] = False
-                collection = getConnection('mongo')[self.colName]
-                collection.create_index('title', unique=True)
-                collection.insert(result)
+                    # print("news[datetime] = " + news['datetime'])
+                if len(result) > 0:
+                    collection = getConnection('mongo')[self.colName]
+                    collection.create_index('title', unique=True)
+                    collection.insert(result)
             except errors.DuplicateKeyError:
                 print('DuplicateKeyError ignored')
             except:

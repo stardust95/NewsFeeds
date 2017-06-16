@@ -7,12 +7,13 @@ var bodyParser = require('body-parser');
 var cors = require('cors')
 var session = require('express-session')
 var randomstring = require("randomstring")
+var NewsData = require('./scripts/newsData')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var news = require('./routes/news');
 
-var config = require('./scripts/config')
+var config = require('./scripts/config');
 
 var app = express();
 
@@ -39,10 +40,19 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
 app.use(function (req, res, next) {
     res.locals.user = req.session.user
     res.locals.genres = config["genres"]
-    next()
+    NewsData.getScrollList((err, result)=>{
+        if( err ){
+            console.log(err)
+        }else{
+            // console.log(result)
+            res.locals.scrollNews = result
+        }
+        next()
+    })
 })
 
 app.use('/', index);

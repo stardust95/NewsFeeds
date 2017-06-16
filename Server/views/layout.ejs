@@ -4,20 +4,20 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <strong>Welcome to Us!</strong>
+                <strong></strong>
             </div>
             <div class="col-md-6">
                 <ul class="list-inline top-link link">
-                    <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="/"><i class="fa fa-home"></i> 主页</a></li>
                     <% console.log(user) %>
                     <% if( user ) { %>
                         <li><a href="/users/info"><i class="fa fa-user"></i> <%= user.email %></a></li>
-                        <li><a href="/logout"><i class="fa fa-comments"></i> Logout</a></li>
+                        <li><a href="/logout"><i class="fa fa-comments"></i> 登出</a></li>
 
                     <% }else { %>
-                        <li><a href="/login"><i class="fa fa-comments"></i> Login</a></li>
+                        <li><a href="/login"><i class="fa fa-comments"></i> 登录</a></li>
                     <% } %>
-                    <li><a href="#"><i class="fa fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fa fa-question-circle"></i> 联系我们</a></li>
                 </ul>
             </div>
         </div>
@@ -28,53 +28,37 @@
 <nav id="menu" class="navbar container">
     <div class="navbar-header">
         <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
-        <a class="navbar-brand" href="#">
-            <div class="logo"><span>Newspaper</span></div>
+        <a class="navbar-brand" href="/">
+            <div class="logo"><span>明日头条</span></div>
         </a>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Login <i class="fa fa-arrow-circle-o-down"></i></a>
+            <!--<li class><a href="/">热点</a></li>-->
+            <% var index = 0, limit = 8 %>
+            <% for(prop in genres) { %>
+                <% if( index > limit ) break; %>
+                <% index++; %>
+                <li><a href="/<%= prop %>"><%= genres[prop] %></a></li>
+            <% } %>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">更多<i class="fa fa-arrow-circle-o-down"></i></a>
                 <div class="dropdown-menu">
-                    <div class="dropdown-inner">
+                    <div class="dropdown-inner" style="width: 100%;">
                         <ul class="list-unstyled">
-                            <li><a href="/newslist">Text 101</a></li>
-                            <li><a href="/newslist">Text 102</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Video <i class="fa fa-arrow-circle-o-down"></i></a>
-                <div class="dropdown-menu">
-                    <div class="dropdown-inner">
-                        <ul class="list-unstyled">
-                            <li><a href="/newslist">Text 201</a></li>
-                            <li><a href="/newslist">Text 202</a></li>
-                            <li><a href="/newslist">Text 203</a></li>
-                            <li><a href="/newslist">Text 204</a></li>
-                            <li><a href="/newslist">Text 205</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Category <i class="fa fa-arrow-circle-o-down"></i></a>
-                <div class="dropdown-menu" style="margin-left: -203.625px;">
-                    <div class="dropdown-inner">
-                        <% let rowsPerCol = 5, keys = Object.keys(genres) %>
-                        <% keys = keys.splice(keys.splice(keys.indexOf('hot'), 1)) %>
-                        <% for(let col=0; col < keys.length / rowsPerCol; col++) { %>
-                            <ul class="list-unstyled">
-                                <% for(let row=0; row<5; row++) { %>
-                                <li><a href="/<%= keys[col * rowsPerCol + row] %>"><%= genres[keys[col * rowsPerCol + row]] %></a></li>
+                            <% index = 0 %>
+                            <% for(prop in genres) { %>
+                                <% if( index > limit ){ %>
+                                    <li><a href="/<%= prop %>"><%= genres[prop] %></a></li>
                                 <% } %>
-                            </ul>
-                        <% } %>
+                                <% index++; %>
+                            <% } %>
+                            <!--<li><a href="/newslist">Text 101</a></li>-->
+                            <!--<li><a href="/newslist">Text 102</a></li>-->
+                        </ul>
                     </div>
                 </div>
             </li>
-            <li><a href="/newslist"><i class="fa fa-cubes"></i> Blocks</a></li>
-            <li><a href="contact.html"><i class="fa fa-envelope"></i> Contact</a></li>
+
         </ul>
         <ul class="list-inline navbar-right top-social">
             <li><a href="#"><i class="fa fa-facebook"></i></a></li>

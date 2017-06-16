@@ -5,11 +5,23 @@
 var MongoClient = require('mongodb').MongoClient;
 var config = require('./config');
 var http = require('http')
+var https = require('https')
 var querystring = require('querystring')
 
 let genres = config["genres"];
 let connectStr = config["connect"]
 let collection = config["newscol"]
+let endpoint = "https://westus.api.cognitive.microsoft.com/recommendations/v4.0"
+
+function queryParams(source) {
+    var array = [];
+
+    for(var key in source) {
+        array.push(encodeURIComponent(key) + "=" + encodeURIComponent(source[key]));
+    }
+
+    return array.join("&");
+}
 
 function getJSON(options, onResult) {
     console.log("rest::getJSON");
@@ -32,6 +44,9 @@ function getJSON(options, onResult) {
                 console.log("url = " + req.url )
                 console.log("error = " + err)
                 var obj = {}
+            }
+            if( res.statusCode != 200 ){
+                console.log(output)
             }
             onResult(res.statusCode, obj);
         });
@@ -95,6 +110,47 @@ class NewsData{
         })
     }
 
+    static getScrollList(callback){
+        MongoClient.connect(connectStr, function (err, db) {
+            if( err ){
+                return console.log(err)
+            }else{
+                let option = {
+                    limit: 10,
+                    sort: {"time": -1}
+                };
+                let selector = {
+                    "has_video": false,
+                    "large_image_url": {
+                        $exists : true
+                    }
+                };
+                //console.log(option)
+                db.collection(collection).find(selector, option).toArray(callback)
+            }
+        })
+    }
+
+    static getHotComments(callback){
+        MongoClient.connect(connectStr, function (err, db) {
+            if( err ){
+                return console.log(err)
+            }else{
+                let option = {
+                    limit: 10,
+                    sort: {"comments_count": -1}
+                };
+
+                let selector = {
+
+                };
+                //console.log(option)
+                db.collection(collection).find(selector, option).toArray(callback)
+            }
+        })
+    }
+
+
     static getContent(id, callback){
         let opt = {
             host: "m.toutiao.com",
@@ -138,12 +194,39 @@ class NewsData{
         getJSON(opt, callback)
     }
 
-    static getHotComments(callback){
+    static getModel(callback){
         MongoClient.connect(connectStr, function (err, db) {
             if( err ){
-
+                return console.log(err)
+            }else{
+                let option = {
+                    "sort": { "time": -1 }
+                }
+                db.collection("recommendModel").findOne({}, option, callback)
             }
         })
+    }
+    static getRelated(id, api, callback){
+        let params = {
+            // Request parameters
+            "includeMetadata": false,
+            "buildId": api.buildId,
+            "modelId": api.modelId,
+            "itemIds": id,
+            "numberOfResults": 10,
+            "minimalScore": 0.5
+        }
+        let opt = {
+            host: "westus.api.cognitive.microsoft.com",
+            port: 443,
+            method: 'GET',
+            path: "/recommendations/v4.0/models/{modelId}/recommend/item?" + queryParams(params),
+            headers: {
+                'Content-Type': 'application/json',
+                'Ocp-Apim-Subscription-Key': api.token
+            }
+        }
+        getJSON(opt, callback)
     }
 
 }

@@ -21,27 +21,27 @@
   },
   "api": {
     "modelid": "28f64f3a-84a8-4f6d-889b-6c738d284aad",
-    "28f64f3a-84a8-4f6d-889b-6c738d284aad": "https://westus.api.cognitive.microsoft.com/recommendations/v4.0",
+    "endpoint": "https://westus.api.cognitive.microsoft.com/recommendations/v4.0",
     "token": "62155e00332a4a62afbfe6478c8c9212"
   },
   "genres": {
-    "car": "汽车",
-    "discover": "探索",
+    "hot": "热门",
+    "society": "社会",
     "domestic": "国内",
+    "global": "国际",
+    "technology": "科技",
+    "finance": "经济",
+    "war": "军事",
     "education": "教育",
+    "car": "汽车",
+    "game": "游戏",
+    "discover": "探索",
     "entertain": "娱乐",
     "fashion": "时尚",
-    "finance": "经济",
-    "game": "游戏",
-    "global": "国际",
     "health": "健康",
     "history": "历史",
-    "hot": "热门",
     "mobile": "数码",
-    "society": "社会",
     "sport": "体育",
-    "technology": "科技",
-    "travel": "旅游",
-    "war": "军事"
+    "travel": "旅游"
   }
 }

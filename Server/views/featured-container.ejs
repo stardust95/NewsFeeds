@@ -1,101 +1,116 @@
-
+<% if( scrollNews ){ %>
 <div class="featured container">
     <div id="owl-demo" class="owl-carousel">
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
+        <% for(var i=0; i<scrollNews.length && i < 8; i++) { %>
+            <div class="item">
+                <div class="zoom-container">
+                    <div class="zoom-caption">
+                        <span><%= scrollNews[i].keywords[0] %></span>
+                        <a href="">
+                            <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
+                        </a>
+                        <!--<p><%= scrollNews[i].title %></p>-->
+                    </div>
+                    <img src="<%= scrollNews[i].imgurls[0] %>"/>
                 </div>
-                <img src="/images/1.jpg" />
             </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/2.jpg" />
-            </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/3.jpg" />
-            </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/8.jpg" />
-            </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/9.jpg" />
-            </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/10.jpg" />
-            </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/11.jpg" />
-            </div>
-        </div>
-        <div class="item">
-            <div class="zoom-container">
-                <div class="zoom-caption">
-                    <span>Youtube</span>
-                    <a href="single.html">
-                        <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
-                    </a>
-                    <p>Video's Name</p>
-                </div>
-                <img src="/images/12.jpg" />
-            </div>
-        </div>
+        <% } %>
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/1.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/2.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/3.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/8.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/9.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/10.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/11.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+            <!--<div class="zoom-container">-->
+                <!--<div class="zoom-caption">-->
+                    <!--<span>Youtube</span>-->
+                    <!--<a href="single.html">-->
+                        <!--<i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>-->
+                    <!--</a>-->
+                    <!--<p>Video's Name</p>-->
+                <!--</div>-->
+                <!--<img src="/images/12.jpg" />-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </div>
+<% } %>

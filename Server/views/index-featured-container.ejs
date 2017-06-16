@@ -6,48 +6,69 @@
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                 <!-- Indicators -->
                 <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <% if( scrollNews ) { %>
+                        <% for(var i=0; i<scrollNews.length && i < 8; i++) { %>
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="<%= i==0 ? 'active' : '' %>"></li>
+                        <% } %>
+                    <% }else{ %>
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    <% } %>
                 </ol>
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="/images/1.jpg" alt="First slide">
-                        <!-- Static Header -->
-                        <div class="header-text hidden-xs">
-                            <div class="col-md-12 text-center">
-                                <h2>Aenean feugiat in ante et </h2>
-                                <br>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                                <br>
+                    <% if( scrollNews ){ %>
+                        <% for(var i=0; i<scrollNews.length; i++) { %>
+                            <div class="item<%= i==0 ? " active" : "" %>">
+                                <img src="<%= scrollNews[i].imgurls[0] %>" alt="First slide">
+                                <!-- Static Header -->
+                                <div class="header-text hidden-xs">
+                                    <div class="col-md-12 text-center">
+                                        <h3><%= scrollNews[i].title %></h3>
+                                        <br>
+                                    </div>
+                                </div><!-- /header-text -->
                             </div>
-                        </div><!-- /header-text -->
-                    </div>
-                    <div class="item">
-                        <img src="/images/2.jpg" alt="Second slide">
-                        <!-- Static Header -->
-                        <div class="header-text hidden-xs">
-                            <div class="col-md-12 text-center">
-                                <h2>Aenean feugiat in ante et blandit. Vestibulum</h2>
-                                <br>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                                <br>
-                            </div>
-                        </div><!-- /header-text -->
-                    </div>
-                    <div class="item">
-                        <img src="/images/3.jpg" alt="Third slide">
-                        <!-- Static Header -->
-                        <div class="header-text hidden-xs">
-                            <div class="col-md-12 text-center">
-                                <h2>Curabitur tincidunt porta lorem vitae</h2>
-                                <br>
-                                <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-                                <br>
-                            </div>
-                        </div><!-- /header-text -->
-                    </div>
+                        <% } %>
+                    <% }else{ %>
+                        <div class="item active">
+                            <img src="/images/1.jpg" alt="First slide">
+                            <!-- Static Header -->
+                            <div class="header-text hidden-xs">
+                                <div class="col-md-12 text-center">
+                                    <h2>Aenean feugiat in ante et </h2>
+                                    <br>
+                                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                                    <br>
+                                </div>
+                            </div><!-- /header-text -->
+                        </div>
+                        <div class="item">
+                            <img src="/images/2.jpg" alt="Second slide">
+                            <!-- Static Header -->
+                            <div class="header-text hidden-xs">
+                                <div class="col-md-12 text-center">
+                                    <h2>Aenean feugiat in ante et blandit. Vestibulum</h2>
+                                    <br>
+                                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                                    <br>
+                                </div>
+                            </div><!-- /header-text -->
+                        </div>
+                        <div class="item">
+                            <img src="/images/3.jpg" alt="Third slide">
+                            <!-- Static Header -->
+                            <div class="header-text hidden-xs">
+                                <div class="col-md-12 text-center">
+                                    <h2>Curabitur tincidunt porta lorem vitae</h2>
+                                    <br>
+                                    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+                                    <br>
+                                </div>
+                            </div><!-- /header-text -->
+                        </div>
+                    <% } %>
                 </div>
                 <!-- Controls -->
                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">

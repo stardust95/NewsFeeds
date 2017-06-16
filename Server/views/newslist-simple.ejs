@@ -1,0 +1,11 @@
+<div class="box">
+    <div class="zoom-container" style="max-width: 100px; !important;">
+        <% if ( recommend.img ) { %>
+            <img class="img-responsive" src="<%= recommend.img %>" />
+        <% } %>
+    </div>
+    <div class="wrapper">
+        <p><a href="/<%= recommend.genre %>"><%= recommend.genres[recommend.genre] %></a> |
+            <a href="/news/<%= recommend.title %>"><%= recommend.title %></a></p>
+    </div>
+</div>

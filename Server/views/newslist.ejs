@@ -1,8 +1,13 @@
 
 <div class="loadbutton text-center">
     <button id="readmoreBtn" onclick="appendNewsList()" class="btn btn-block btn-social btn-flat btn-facebook">
-        加载更多
+        <!--加载更多-->
+        <span id="readmoreBtnText"></span>
+        <div class="overlay" style="display: inherit;">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
     </button>
+
 </div>
 <script>
     let tag = "<%= tag %>"

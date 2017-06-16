@@ -5,7 +5,7 @@
     <div class="comment-text">
                       <span class="username">
                         <%= comment.user.name %>
-                          <span class="text-muted pull-right"><%- Date(comment.create_time*1000) %></span>
+                          <span class="text-muted pull-right"><%- Date(comment.create_time*1000).toLocaleString() %></span>
                       </span><!-- /.username -->
         <p>
             <%= comment.text %>

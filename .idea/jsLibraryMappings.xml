@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{bootstrap, html5shiv, jquery, moment, owl.carousel, respond}" />
+    <file url="PROJECT" libraries="{bootstrap, embed-widget-market-overview, html5shiv, jquery, moment, owl.carousel, respond}" />
   </component>
 </project>

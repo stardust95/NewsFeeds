@@ -81,13 +81,13 @@ body.sub-page .logo {margin: 110px 0 80px;background: url(../images/bg.jpg) fixe
 #menu .navbar-brand{margin: 0;padding: 14px 18px;background-color: #000000;height: auto;text-transform: uppercase;}
 #menu .logo {}
 #menu .navbar-collapse{padding:0;}
-#menu .dropdown-menu {background-color: #fff;border:none;}
-#menu ul.nav .dropdown-menu li a{color: #000;font-weight: bold;border-radius: 5px !important;}
-#menu ul.nav .dropdown-menu li a:hover{color: #fff;background-color: #000;}
+#menu .dropdown-menu {background-color: #000; color: #fff; border:none;}
+#menu ul.nav .dropdown-menu li a{font-weight: bold;border-radius: 5px !important;}
+#menu ul.nav .dropdown-menu li a:hover{color: #000;background-color: #fff;}
 #menu .dropdown-inner {display: table;}
 #menu .dropdown-inner ul {display: table-cell;}
 #menu .dropdown-inner a {min-width: 160px;display: block;padding: 3px 20px;clear: both;line-height: 20px;color: #000;font-size: 14px;margin: 0 5px;}
-#menu li.dropdown:hover>a, #menu li.dropdown:focus>a, #menu li.dropdown:active>a{background: #fff;color: #000;}
+#menu li.dropdown:hover>a, #menu li.dropdown:focus>a, #menu li.dropdown:active>a{background: #000;color: #fff;}
 
 #menu ul.nav li a{font-weight: bold;color: #fff;border-radius: 5px;padding: 14px 19px;}
 #menu ul.nav li.dropdown a{border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;}

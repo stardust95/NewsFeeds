@@ -11,6 +11,7 @@ var router = express.Router();
 var News = require('../scripts/newsData')
 let newsTemplate = ejs.compile(fs.readFileSync('views/newsitem.ejs', 'utf-8'))
 let commentTemplate = ejs.compile(fs.readFileSync('views/commentitem.ejs', 'utf-8'))
+let newsSimpleTemplate = ejs.compile(fs.readFileSync('views/newslist-simple.ejs', 'utf-8'))
 
 let expireTime = 1 // expire after 60 seconds
 let expireFlag = "EX"
@@ -66,7 +67,8 @@ router.get('/list', function (req, res, next) {
                         res.json();
                     }else{          // success
                         console.log('result.length = ' + result.length)
-                        if( html ){
+                        if( html === "1" ){
+                            console.log("is html");
                             var ret = ""
                             for(let idx = 0; idx < result.length; idx++){
                                 ret += newsTemplate({ news: result[idx] }) + "\n"
@@ -78,6 +80,7 @@ router.get('/list', function (req, res, next) {
                             cache(key, JSON.stringify(ret))
                             res.json(ret)
                         }else{
+                            console.log("not html");
                             cache(key, JSON.stringify(result))
                             res.json(result);
                         }
@@ -90,6 +93,17 @@ router.get('/list', function (req, res, next) {
         res.json({ message: "Invalid Genre" })
     }
 })
+//
+// router.get('/api', function (req, res) {
+//     News.getModel(function (err, result) {
+//         if( err ){
+//             console.log(err)
+//             return res.json({})
+//         }else{
+//             return res.json(result)
+//         }
+//     })
+// })
 
 router.get('/content', function (req, res) {
     let id = req.query.id
@@ -189,7 +203,7 @@ router.get('/:title', function (req, res) {
                     res.status(500).json({})
                 }else if( result ){
                     console.log("seo_url = " + result.item_seo_url)
-                    cache(key, JSON.stringify(result), true)        // news content not expire
+                    cache(key, JSON.stringify(result))
                     // res.json(result)
                     res.render('newspage', {
                         genres: genres,
@@ -200,6 +214,47 @@ router.get('/:title', function (req, res) {
                         status: 404,
                         message: "Page Not Found"
                     })
+                }
+            })
+        }
+    })
+})
+
+router.get('/related/:newsid', function (req, res, next) {
+    let id = req.params.newsid
+    if( !id ){
+        return res.status(404).send()
+    }
+    News.getModel(function (err, result) {
+        if( err ){
+            console.log(err)
+            return res.json({})
+        }else{
+            News.getRelated(id, result, function (statusCode, result) {
+                if( statusCode == 200 ){
+                    var newsArr = []
+                    result = result["recommendedItems"]
+                    for(let index in result){
+                        let node = result[index]["items"]
+                        for(let index2 in node){
+                            let arr = node[index2]["name"].split("||")
+                            newsArr.push({
+                                genres: genres,
+                                genre: arr[0],
+                                title: arr[1],
+                                img: arr[2]
+                            })
+                        }
+                    }
+                    ret = ""
+                    for(let index in newsArr){
+                        ret += newsSimpleTemplate({
+                            recommend: newsArr[index]
+                        })
+                    }
+                    res.send(ret)
+                }else{
+                    res.status(statusCode).send()
                 }
             })
         }
