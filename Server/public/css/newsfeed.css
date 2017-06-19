@@ -6,6 +6,10 @@ body{
     margin: 0 auto;
 }
 
+.box .info .like a{
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
 
 .box>.overlay,
 .overlay-wrapper>.overlay,

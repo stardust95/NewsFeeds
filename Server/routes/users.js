@@ -142,4 +142,19 @@ router.post('/login', function (req, res, next) {
     })
 })
 
+router.get('/like/:news_id', function (req, res, next) {
+    let id = req.params.news_id
+    if( res.locals.user ){
+        User.findOne({ email: res.locals.user.email }, function (err, result) {
+            if( err ){
+                console.log(err)
+            }else{
+
+            }
+        })
+    }else{      // have not logged in
+        res.redirect('/login')
+    }
+})
+
 module.exports = router;

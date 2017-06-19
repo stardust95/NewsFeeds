@@ -71,7 +71,10 @@ router.get('/list', function (req, res, next) {
                             console.log("is html");
                             var ret = ""
                             for(let idx = 0; idx < result.length; idx++){
-                                ret += newsTemplate({ news: result[idx] }) + "\n"
+                                ret += newsTemplate({
+                                        news: result[idx],
+                                        user: res.locals.user
+                                }) + "\n"
                             }
                             ret = {
                                 size: result.length,
@@ -249,7 +252,8 @@ router.get('/related/:newsid', function (req, res, next) {
                     ret = ""
                     for(let index in newsArr){
                         ret += newsSimpleTemplate({
-                            recommend: newsArr[index]
+                            recommend: newsArr[index],
+                            user: res.locals.user
                         })
                     }
                     res.send(ret)

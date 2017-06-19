@@ -5,7 +5,11 @@
         <h5>By <a href="#"><%= news.source %></a></h5>
         <span><i class="fa fa-calendar"></i> <%= news.time %></span>
         <span><i class="fa fa-comment"></i> <%= news.commentNum %> Comments</span>
-        <span><i class="fa fa-heart"></i><%= news.approval %></span>
+        <% if( user && (news._id in user.interest) ) { %>
+        <span class="like"><a href="/unlike/<%= news._id %>"><i class="fa fa-heart-o"></i>已收藏</a></span>
+        <% }else { %>
+            <span class="like"><a href="/like/<%= news._id %>"><i class="fa fa-heart"></i>收藏</a></span>
+        <% } %>
         <ul class="list-inline">
             <li><a href="#">关键字</a></li>
             <li> - </li>

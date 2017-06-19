@@ -42,8 +42,11 @@ app.use(session({
 }))
 
 app.use(function (req, res, next) {
-    res.locals.user = req.session.user
-    res.locals.genres = config["genres"]
+    res.locals.user = req.session.user;
+    if( !res.locals.user )
+        res.locals.user = null;
+    // console.log("user = " + res.locals.user)
+    res.locals.genres = config["genres"];
     NewsData.getScrollList((err, result)=>{
         if( err ){
             console.log(err)
