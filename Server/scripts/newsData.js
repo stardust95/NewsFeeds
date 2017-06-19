@@ -8,6 +8,7 @@ var config = require('./config');
 var http = require('http')
 var https = require('https')
 var querystring = require('querystring')
+var oneSignal = require('../scripts/oneSignal');
 
 let genres = config["genres"];
 let connectStr = config["connect"]
@@ -22,6 +23,10 @@ function queryParams(source) {
     }
 
     return array.join("&");
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * Math.abs(max - min)) + min;
 }
 
 function getJSON(options, onResult) {
@@ -182,6 +187,26 @@ class NewsData{
         })
     }
 
+    static getNewsById(ids, callback){
+        MongoClient.connect(connectStr, function (err, db) {
+            if( err ){
+                return console.log(err)
+            }else{
+                let selector = {
+                    "_id": {
+                        $in: ids
+                    }
+                };
+                let option = {
+                    "sort": {"time": -1},
+                    limit: 10
+                };
+                // console.log(selector);
+                db.collection(collection).find(selector, option).toArray(callback)
+            }
+        })
+    }
+
     static getComment(group, item, callback){
         let opt = {
             host: "www.toutiao.com",
@@ -232,13 +257,15 @@ class NewsData{
         }
         getJSON(opt, callback)
     }
-    static getRelated(relatedWords, callback){
+    static getRelated(relatedWords, callback, offset = 0, limit = 10){
         MongoClient.connect(connectStr, function (err, db) {
             if( err ){
                 return console.log(err)
             }else{
                 let option = {
-                    "limit": 10
+                    limit: limit,
+                    skip: offset,
+                    sort: {"time": -1}
                 };
                 let filter = {
                     "keywords": {
@@ -252,6 +279,22 @@ class NewsData{
                     "genre": 1
                 }
                 db.collection(collection).find(filter, option).toArray(callback)
+            }
+        })
+    }
+
+    static pushHotNews(){
+        console.log("Push hot news to all users");
+        NewsData.getList("hot", null, function (err, result) {
+            if( err ){
+                console.log(err)
+            }else if( result.length > 0 ){
+                let index = getRandomInt(0, 9)
+                oneSignal.sendNotification(result[index].title, {
+                    included_segments: ['All'],
+                    url: "http://" + config["host"] + ":" + config["port"] + "/news/" + result[index].title,
+                    big_picture: result[index].imgurls[0]
+                })
             }
         })
     }

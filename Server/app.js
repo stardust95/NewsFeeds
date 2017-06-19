@@ -39,7 +39,7 @@ app.use(session({
     },
     resave: true,
     saveUninitialized: true
-}))
+}));
 
 app.use(function (req, res, next) {
     res.locals.genre = null
@@ -57,7 +57,7 @@ app.use(function (req, res, next) {
         }
         next()
     })
-})
+});
 
 app.use('/', index);
 app.use('/users', users);

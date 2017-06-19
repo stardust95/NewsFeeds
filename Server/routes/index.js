@@ -68,7 +68,9 @@ router.get('/info', function (req, res) {
 
 let genres = config['genres']
 router.get('/:genre', function (req, res, next) {
-    if( newsData.validGenre(req.params.genre) )
+    if( req.params.genre == "personal" && !res.locals.user ){
+        res.redirect('/login')
+    }else if( newsData.validGenre(req.params.genre) )
         res.render('newslistpage', {
             genres: genres,
             title: genres[req.params.genre],

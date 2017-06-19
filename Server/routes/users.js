@@ -1,9 +1,9 @@
 var express = require('express');
 
 var router = express.Router();
-var User = require('../scripts/userModel')
-var nev = require('../scripts/userMethods').nev
-var oneSignal = require('../scripts/oneSignal')
+var User = require('../scripts/userModel');
+var nev = require('../scripts/userMethods').nev;
+var NewsData = require('../scripts/newsData')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -18,7 +18,7 @@ router.post('/register', function (req, res, next) {
         interest: []
     })
     if( !user.email || !user.password || !user.fullname ){
-        console.log("body = " + req.body())
+        // console.log("body = " + req.body())
         res.render('info', {
             title: "Register Failed",
             message: "Invalid Fields"
@@ -143,6 +143,11 @@ router.post('/login', function (req, res, next) {
     })
 })
 
+router.get('/logout', function (req, res) {
+    req.session.user = null
+    res.redirect('/')
+})
+
 router.get('/like/:news_id', function (req, res, next) {
     let id = req.params.news_id
     if( res.locals.user ){
@@ -155,6 +160,7 @@ router.get('/like/:news_id', function (req, res, next) {
                     req.session.user = result;
                     result.save()
                 }
+                 NewsData.pushHotNews();        // push a hot news when logged in
             }
             res.redirect('back')
         })
@@ -162,7 +168,6 @@ router.get('/like/:news_id', function (req, res, next) {
         res.redirect('/login')
     }
 });
-
 
 router.get('/unlike/:news_id', function (req, res, next) {
     let id = req.params.news_id

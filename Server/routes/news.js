@@ -65,7 +65,35 @@ router.get('/list', function (req, res, next) {
             res.json(result);
         }
     }
-    if( tag || (genre && News.validGenre(genre)) ){
+    if( genre === "personal" ){
+        if( res.locals.user ){
+            relatedWords = [];
+            ids = [];
+            res.locals.user.interest.forEach((value)=>{
+                ids.push(ObjectID(String(value)))
+            });
+            // ids.push( ObjectID("594743ecf1ab9213b15fe187") )
+
+            News.getNewsById(ids, function (err, result) {
+                if( err ){
+                    console.log(err)
+                }else{
+                    result.forEach((value)=>{
+                        relatedWords = relatedWords.concat(value.keywords)
+                    });
+                    News.getRelated(relatedWords, function (err, arr) {
+                        if( err ){
+                            console.log(err)
+                        }else{
+                            renderResult(arr)
+                        }
+                    }, offset, limit)
+                }
+            })
+        }else{
+            res.redirect('/login')
+        }
+    }else if( tag || (genre && News.validGenre(genre)) ){
         // check redis
         let key = JSON.stringify({
             tag: tag,
@@ -94,22 +122,11 @@ router.get('/list', function (req, res, next) {
                 }, offset, limit)
             }
         })
-
     }else{
         res.json({ message: "Invalid Genre" })
     }
 })
 //
-// router.get('/api', function (req, res) {
-//     News.getModel(function (err, result) {
-//         if( err ){
-//             console.log(err)
-//             return res.json({})
-//         }else{
-//             return res.json(result)
-//         }
-//     })
-// })
 
 router.get('/content', function (req, res) {
     let id = req.query.id
@@ -295,6 +312,7 @@ router.get('/related/:newsid', function (req, res, next) {
     //     }
     // })
 })
+
 
 
 module.exports = router;
