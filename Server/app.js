@@ -42,6 +42,7 @@ app.use(session({
 }))
 
 app.use(function (req, res, next) {
+    res.locals.genre = null
     res.locals.user = req.session.user;
     if( !res.locals.user )
         res.locals.user = null;

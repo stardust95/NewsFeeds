@@ -7,6 +7,7 @@ var ejs = require('ejs');
 var redisClient = require('../scripts/redisdb')
 var config = require('../scripts/config')
 var router = express.Router();
+var ObjectID = require('mongodb').ObjectID
 
 var News = require('../scripts/newsData')
 let newsTemplate = ejs.compile(fs.readFileSync('views/newsitem.ejs', 'utf-8'))
@@ -44,12 +45,31 @@ router.get('/list', function (req, res, next) {
         })
         return;
     }
+    let renderResult = function (result) {
+        if( html === "1" ){
+            console.log("is html");
+            var ret = ""
+            for(let idx = 0; idx < result.length; idx++){
+                ret += newsTemplate({
+                        news: result[idx],
+                        user: res.locals.user
+                    }) + "\n"
+            }
+            ret = {
+                size: result.length,
+                html: ret
+            }
+            res.json(ret)
+        }else{
+            console.log("not html");
+            res.json(result);
+        }
+    }
     if( tag || (genre && News.validGenre(genre)) ){
         // check redis
         let key = JSON.stringify({
             tag: tag,
             genre: genre,
-            html: html,
             offset: offset,
             limit: limit
         })
@@ -59,34 +79,17 @@ router.get('/list', function (req, res, next) {
                 res.json({ message: "redis error"})
             }else if( reply ){
                 console.log("redis hit")
-                return res.send(reply)
+                result = JSON.parse(reply);
+                renderResult(result)
             }else{
                 News.getList(genre, tag, (err, result) => {
                     if( err ){
                         console.log(err);
                         res.json();
                     }else{          // success
+                        cache(key, JSON.stringify(result))
                         console.log('result.length = ' + result.length)
-                        if( html === "1" ){
-                            console.log("is html");
-                            var ret = ""
-                            for(let idx = 0; idx < result.length; idx++){
-                                ret += newsTemplate({
-                                        news: result[idx],
-                                        user: res.locals.user
-                                }) + "\n"
-                            }
-                            ret = {
-                                size: result.length,
-                                html: ret
-                            }
-                            cache(key, JSON.stringify(ret))
-                            res.json(ret)
-                        }else{
-                            console.log("not html");
-                            cache(key, JSON.stringify(result))
-                            res.json(result);
-                        }
+                        renderResult(result)
                     }
                 }, offset, limit)
             }
@@ -228,41 +231,69 @@ router.get('/related/:newsid', function (req, res, next) {
     if( !id ){
         return res.status(404).send()
     }
-    News.getModel(function (err, result) {
+    News.getNews(id, function (err, result) {
         if( err ){
             console.log(err)
-            return res.json({})
+            return res.json()
         }else{
-            News.getRelated(id, result, function (statusCode, result) {
-                if( statusCode == 200 ){
-                    var newsArr = []
-                    result = result["recommendedItems"]
-                    for(let index in result){
-                        let node = result[index]["items"]
-                        for(let index2 in node){
-                            let arr = node[index2]["name"].split("||")
-                            newsArr.push({
-                                genres: genres,
-                                genre: arr[0],
-                                title: arr[1],
-                                img: arr[2]
-                            })
-                        }
-                    }
-                    ret = ""
-                    for(let index in newsArr){
-                        ret += newsSimpleTemplate({
-                            recommend: newsArr[index],
-                            user: res.locals.user
-                        })
-                    }
-                    res.send(ret)
+            News.getRelated(result.keywords, function (err, arr) {
+                if( err ){
+                    console.log(err)
+                    return res.json()
                 }else{
-                    res.status(statusCode).send()
+                    // console.log(arr)
+                    ret = ""
+                    arr.forEach((value)=>{
+                        ret += newsSimpleTemplate({
+                            recommend: {
+                                genres: genres,
+                                genre: value.genre,
+                                title: value.title,
+                                img: value.imgurls[0]
+                            }
+                        })
+                    })
+                    return res.send(ret)
+                    // return res.json(arr)
                 }
             })
         }
-    })
+    }, false)
+    // News.getModel(function (err, result) {
+    //     if( err ){
+    //         console.log(err)
+    //         return res.json({})
+    //     }else{
+    //         News.getRelated(id, result, function (statusCode, result) {
+    //             if( statusCode == 200 ){
+    //                 var newsArr = []
+    //                 result = result["recommendedItems"]
+    //                 for(let index in result){
+    //                     let node = result[index]["items"]
+    //                     for(let index2 in node){
+    //                         let arr = node[index2]["name"].split("||")
+    //                         newsArr.push({
+    //                             genres: genres,
+    //                             genre: arr[0],
+    //                             title: arr[1],
+    //                             img: arr[2]
+    //                         })
+    //                     }
+    //                 }
+    //                 ret = ""
+    //                 for(let index in newsArr){
+    //                     ret += newsSimpleTemplate({
+    //                         recommend: newsArr[index],
+    //                         user: res.locals.user
+    //                     })
+    //                 }
+    //                 res.send(ret)
+    //             }else{
+    //                 res.status(statusCode).send()
+    //             }
+    //         })
+    //     }
+    // })
 })
 
 

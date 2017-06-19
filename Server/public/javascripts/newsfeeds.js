@@ -79,12 +79,6 @@ function onRegisterClick() {
         'fullname': $('input[type=text]')[0].value,
         'email': $('input[type=email]')[0].value,
         'password': $('input[type=password]')[0].value
-    }, function (data, status) {
-        if( isSuccess(status) ){
-            document.open()
-            document.write(data)
-            document.close()
-        }
     })
 }
 

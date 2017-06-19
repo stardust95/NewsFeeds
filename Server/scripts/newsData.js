@@ -3,6 +3,7 @@
  */
 
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID;
 var config = require('./config');
 var http = require('http')
 var https = require('https')
@@ -165,14 +166,17 @@ class NewsData{
         getJSON(opt, callback)
     }
 
-    static getNews(title, callback){
+    static getNews(title, callback, isTitle = true){
         MongoClient.connect(connectStr, function (err, db) {
             if( err ){
                 return console.log(err)
             }else{
-                let selector = {
-                    title: title
-                }
+                let selector = {}
+                if( isTitle )
+                    selector.title = title
+                else
+                    selector._id = ObjectID(title)
+                console.log(selector)
                 db.collection(collection).findOne(selector, callback)
             }
         })
@@ -206,7 +210,7 @@ class NewsData{
             }
         })
     }
-    static getRelated(id, api, callback){
+    static getRecommend(id, api, callback){
         let params = {
             // Request parameters
             "includeMetadata": false,
@@ -227,6 +231,29 @@ class NewsData{
             }
         }
         getJSON(opt, callback)
+    }
+    static getRelated(relatedWords, callback){
+        MongoClient.connect(connectStr, function (err, db) {
+            if( err ){
+                return console.log(err)
+            }else{
+                let option = {
+                    "limit": 10
+                };
+                let filter = {
+                    "keywords": {
+                        "$in": relatedWords
+                    }
+                };
+                let projection = {
+                    "title": 1,
+                    "time": 1,
+                    "imgurls": 1,
+                    "genre": 1
+                }
+                db.collection(collection).find(filter, option).toArray(callback)
+            }
+        })
     }
 
 }

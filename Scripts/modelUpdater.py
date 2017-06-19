@@ -5,6 +5,8 @@ from newsCrawler import getConnection
 from traceback import print_exc
 import random
 from datetime import datetime
+import gc
+import gensim
 
 filename = 'config.ini'
 section = 'api'
@@ -27,6 +29,7 @@ class RecommendModel():
         self.colName = 'news'
         self.modelColName = 'recommendModel'
         self.timeFormat = '%Y/%m/%dT%H:%M:%S'
+        self.word2vecModel = '../wiki/wiki.zh.text.model'
 
     def updateCatalog(self):
         catalogurl = self.endpoint + '/models/%s/catalog' % self.modelid
@@ -132,10 +135,32 @@ class RecommendModel():
 
         except:
             print_exc()
-        
+
+    def buildRelated(self):
+        collection = getConnection('mongo')[self.colName]
+        model = gensim.models.Word2Vec.load(self.word2vecModel)
+        try:
+            for news in collection.find({ "related_words": { "$exists": 0 } }, projection={"keywords":1, "title": 1, "_id": 1}):
+                relatedWords = set()
+                for keyword in news["keywords"]:
+                    try:
+                        relatedWords |= set(map(lambda t: t[0], model.most_similar(keyword)))
+                    except KeyError:
+                        print("KeyError:", keyword)
+                        continue
+                print(news["title"])
+                collection.update_one({"_id": news["_id"]}, 
+                                        {"$set": { "related_words": list(relatedWords) }})
+        except:
+            print_exc()
+        finally:
+            model = None
+            gc.collect()
+
 if __name__ == "__main__":
     model = RecommendModel()
     # model.updateCatalog()
-    model.deleteEarlyModel();
+    # model.deleteEarlyModel();
+    model.buildRelated()
     # model.generateUsageFile(1000, ['546816713@qq.com'])
     # model.triggerBuild()

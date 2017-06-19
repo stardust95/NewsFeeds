@@ -3,14 +3,19 @@
 <div class="box newscontent">
 
     <h2 class="vid-name"><%= news.title %></h2>
+
     <div class="info">
         <h5>By <a href="#"><%= news.source %></a></h5>
         <span><i class="fa fa-calendar"></i> <%= news.time %></span>
         <span><i class="fa fa-comment"></i> <%= news.commentNum %> Comments</span>
-        <span><i class="fa fa-heart"></i><%= news.approval %></span>
+        <% if( user && user.interest.includes(String(news._id)) ) { %>
+        <span class="like"><a href="/users/unlike/<%= news._id %>"><i class="fa fa-heart"></i>已收藏</a></span>
+        <% }else { %>
+        <span class="like"><a href="/users/like/<%= news._id %>"><i class="fa fa-heart-o"></i>收藏</a></span>
+        <% } %>
         <ul class="list-inline">
             <li><a href="#">关键字</a></li>
-            <li> : </li>
+            <li> - </li>
             <% for(let i=0; i<news.keywords.length && i < 5; i++){ %>
             <li>
                 <span><a href="/tag/<%= news.keywords[i] %>"><%= news.keywords[i] %></a><%= i==news.keywords.length-1?"":"," %></span>

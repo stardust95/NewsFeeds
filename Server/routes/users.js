@@ -3,8 +3,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../scripts/userModel')
 var nev = require('../scripts/userMethods').nev
-
-
+var oneSignal = require('../scripts/oneSignal')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -53,9 +52,12 @@ router.post('/register', function (req, res, next) {
             nev.sendVerificationEmail(user.email, URL, function(err, info) {
                 if (err){
                     console.log(err)
-                    res.status(500).json()
+                    res.render("info", {
+                        title: "Error",
+                        message: "Internal Error"
+                    })
                 }else {
-                    res.status(201).render("info", {
+                    res.render("info", {
                         title: "Notice",
                         message: "Verification Mail Sended"
                     })
@@ -70,7 +72,7 @@ router.post('/register', function (req, res, next) {
             // flash message of failure...
         }
     })
-})
+});
 
 router.post('/register/resend', function (req, res, next) {
     nev.resendVerificationEmail(req.body.email, function (err, userFound) {
@@ -94,7 +96,7 @@ router.post('/register/resend', function (req, res, next) {
             })
         }
     })
-})
+});
 
 // TODO: provide a verification success page
 router.get('/email-verification/:url', function (req, res) {
@@ -103,15 +105,16 @@ router.get('/email-verification/:url', function (req, res) {
     nev.confirmTempUser(url, function (err, user) {
         if( err ){
             console.log(err)
-            res.json()
         }else {
             nev.sendConfirmationEmail(user.email, function (err, info) {
                 if( err ){
-                    res.json({
+                    res.render("info", {
+                        title: "Notice",
                         message: "Sending confirmation email failed"
                     })
-                }else {
-                    res.cookie('user', new Buffer(user.email).toString('base64'))        // automatically login
+                }else {  // email verification successful
+                    // res.cookie('user', new Buffer(user.email).toString('base64'))        // automatically login
+                    req.session.user = user
                     res.redirect('/')       // redirect to home page
                 }
             })
@@ -126,16 +129,14 @@ router.post('/login', function (req, res, next) {
         console.log(err)
       }else {
         if( !result ){   // user not exist
-          res.json({message: 'Email Not Exist'})
+          res.render("info", {title: "Notice", message: 'Email Not Exist'})
         }else{
-          // TODO: login status cookie
             if( result.validPassword(req.body.password) ){      // success
                 req.session.user = result
                 console.log("login success: " + result)
-                // res.json({ success: true })
                 res.redirect('/')
             }else{
-                res.json({ message: 'Incorrect Password' })
+                res.render("info", {title: "Notice", message: 'Incorrect Password' })
             }
         }
       }
@@ -149,12 +150,36 @@ router.get('/like/:news_id', function (req, res, next) {
             if( err ){
                 console.log(err)
             }else{
+                if( !(result.interest.includes(id)) ){
+                    result.interest.push(id)
+                    req.session.user = result;
+                    result.save()
+                }
+            }
+            res.redirect('back')
+        })
+    }else{      // have not logged in
+        res.redirect('/login')
+    }
+});
 
+
+router.get('/unlike/:news_id', function (req, res, next) {
+    let id = req.params.news_id
+    if( res.locals.user ){
+        User.findOne({ email: res.locals.user.email }, function (err, result) {
+            if( err ){
+                console.log(err)
+            }else{
+                result.interest.remove(id)
+                result.save()
+                req.session.user = result;
+                res.redirect('back')
             }
         })
     }else{      // have not logged in
         res.redirect('/login')
     }
-})
+});
 
 module.exports = router;

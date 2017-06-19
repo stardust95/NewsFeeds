@@ -4,7 +4,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <strong></strong>
+                <% if( genre ){ %>
+                    <strong><%= genres[genre] %></strong>
+                <% } %>
+
             </div>
             <div class="col-md-6">
                 <ul class="list-inline top-link link">
@@ -13,7 +16,6 @@
                     <% if( user ) { %>
                         <li><a href="/users/info"><i class="fa fa-user"></i> <%= user.email %></a></li>
                         <li><a href="/logout"><i class="fa fa-comments"></i> 登出</a></li>
-
                     <% }else { %>
                         <li><a href="/login"><i class="fa fa-comments"></i> 登录</a></li>
                     <% } %>
@@ -25,7 +27,7 @@
 </nav>
 
 <!--Navigation-->
-<nav id="menu" class="navbar container">
+<nav id="menu" class="navbar container hidden-xs">
     <div class="navbar-header">
         <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
         <a class="navbar-brand" href="/">
