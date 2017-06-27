@@ -23,7 +23,7 @@ function cache(key, value, notExpire, time) {
     else
         return redisClient.set(key, value, expireFlag, time ? time : expireTime)
 }
-
+``
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');

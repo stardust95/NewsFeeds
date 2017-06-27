@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GoNativeTheme.NoActionBar" parent="GoNativeTheme.WithActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="GoNativeTheme.WithActionBar" parent="GN.Light">
+        <!--Remove action bar shadow. We are managing it ourselves with the tabs.-->
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!--GoNative placeholder: colorPrimary-->
+        <item name="colorPrimaryDark">#909090</item>
+        <!--GoNative placeholder: titleTextColor-->
+        <!--GoNative placeholder: colorAccent-->
+    </style>
+
+    <attr name="ic_action_refresh" format="reference"/>
+    <attr name="ic_action_search" format="reference"/>
+    <attr name="ic_action_share" format="reference"/>
+
+    <style name="GN.Light" parent="Theme.AppCompat.Light">
+        <item name="ic_action_refresh">@drawable/ic_refresh_black_24dp</item>
+        <item name="ic_action_search">@drawable/ic_search_black_24dp</item>
+        <item name="ic_action_share">@drawable/ic_share_black_24dp</item>
+    </style>
+
+    <style name="GN.LightWithDarkActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="ic_action_refresh">@drawable/ic_refresh_white_24dp</item>
+        <item name="ic_action_search">@drawable/ic_search_white_24dp</item>
+        <item name="ic_action_share">@drawable/ic_share_white_24dp</item>
+    </style>
+
+    <style name="GN.Dark" parent="Theme.AppCompat">
+        <item name="ic_action_refresh">@drawable/ic_refresh_white_24dp</item>
+        <item name="ic_action_search">@drawable/ic_search_white_24dp</item>
+        <item name="ic_action_share">@drawable/ic_share_white_24dp</item>
+    </style>
+
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="SplashScreen">
+        <item name="android:padding">0dp</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFrame">@null</item>
+    </style>
+
+    <style name="SplashScreenAnimation">
+        <item name="android:windowExitAnimation">@anim/fast_fade_out</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@drawable/splash</item>
+    </style>
+</resources>

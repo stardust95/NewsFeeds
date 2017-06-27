@@ -214,12 +214,13 @@ var AST_LabeledStatement = DEFNODE("LabeledStatement", "label", {
     clone: function(deep) {
         var node = this._clone(deep);
         if (deep) {
-            var refs = node.label.references;
-            var label = this.label;
+            var label = node.label;
+            var def = this.label;
             node.walk(new TreeWalker(function(node) {
                 if (node instanceof AST_LoopControl
-                    && node.label && node.label.thedef === label) {
-                    refs.push(node);
+                    && node.label && node.label.thedef === def) {
+                    node.label.thedef = label;
+                    label.references.push(node);
                 }
             }));
         }
@@ -797,8 +798,8 @@ var AST_Object = DEFNODE("Object", "properties", {
 var AST_ObjectProperty = DEFNODE("ObjectProperty", "key value", {
     $documentation: "Base class for literal object properties",
     $propdoc: {
-        key: "[string] the property name converted to a string for ObjectKeyVal.  For setters and getters this is an arbitrary AST_Node.",
-        value: "[AST_Node] property value.  For setters and getters this is an AST_Function."
+        key: "[string] the property name converted to a string for ObjectKeyVal.  For setters and getters this is an AST_SymbolAccessor.",
+        value: "[AST_Node] property value.  For setters and getters this is an AST_Accessor."
     },
     _walk: function(visitor) {
         return visitor._visit(this, function(){
@@ -1035,16 +1036,16 @@ TreeWalker.prototype = {
             self = p;
         }
     },
-    loopcontrol_target: function(label) {
+    loopcontrol_target: function(node) {
         var stack = this.stack;
-        if (label) for (var i = stack.length; --i >= 0;) {
+        if (node.label) for (var i = stack.length; --i >= 0;) {
             var x = stack[i];
-            if (x instanceof AST_LabeledStatement && x.label.name == label.name) {
+            if (x instanceof AST_LabeledStatement && x.label.name == node.label.name)
                 return x.body;
-            }
         } else for (var i = stack.length; --i >= 0;) {
             var x = stack[i];
-            if (x instanceof AST_Switch || x instanceof AST_IterationStatement)
+            if (x instanceof AST_IterationStatement
+                || node instanceof AST_Break && x instanceof AST_Switch)
                 return x;
         }
     }

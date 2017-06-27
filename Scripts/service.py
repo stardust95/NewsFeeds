@@ -22,17 +22,10 @@ def main():
     loop = 1
     interval = int(getConfig('default', 'request_interval'))
     schedule.every().day.do(updateModel)
-
-    try:
-        while True:
-            toutiao.start()
-            model.updateCatalog()
-            loop = loop + 1
-            print('loop = ', loop)
-            time.sleep(interval)
-    except:
-        print_exc()
-        exit()
+    schedule.every().hour.do(model.buildRelated)
+    schedule.every().hour.do(toutiao.start)
+    while True:
+        time.sleep(interval)
 
 if __name__ == '__main__':
     main()

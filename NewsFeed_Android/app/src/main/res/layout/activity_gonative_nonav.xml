@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:pstsShouldExpand="true"
+        app:pstsForegroundColor="@color/tab_foreground_color"
+        app:pstsIndicatorHeight="4dp"
+        android:visibility="gone"/>
+    <android.support.v4.view.ViewPager android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:alpha="0.0"/>
+
+    <io.gonative.android.MySwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tabs">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <io.gonative.android.LeanWebView android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+    </io.gonative.android.MySwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Holo.Light.ProgressBar.Large"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <RelativeLayout
+        android:id="@+id/fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:visibility="invisible"/>
+
+</RelativeLayout>

@@ -7,7 +7,6 @@ from pymongo import *
 
 HEADERS = {
     'Accept':'text/html',
-    # 'Connection':'keep-alive',
     'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.97 Safari/537.36"
 }
 
@@ -17,8 +16,6 @@ def getConnection(section, configName = 'config.ini'):
     host = config.get(section, 'db_host')
     port = config.get(section, 'db_port')
     name = config.get(section, 'db_name')
-    # dbuser = config.get(section, 'db_user')
-    # dbpass = config.get(section, 'db_pass')
     return MongoClient(host, int(port))[name]
 
 class Tencent():

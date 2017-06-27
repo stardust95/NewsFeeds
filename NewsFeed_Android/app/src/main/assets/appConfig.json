@@ -1,0 +1,396 @@
+{
+  "general": {
+    "userAgentRegexes": [],
+    "replaceStrings": [],
+    "userAgentAdd": "gonative",
+    "useWKWebView": true,
+    "enableWindowOpen": true,
+    "useCrosswalkWebView": false,
+    "forceScreenOrientation": null,
+    "initialUrl": "http://123.206.106.195:3000/",
+    "appName": "NewsFeed",
+    "publicKey": "zplnrk",
+    "deviceRegKey": "v5xbaq4hy00pcz80hd3n8ty0j4"
+  },
+  "navigation": {
+    "androidPullToRefresh": false,
+    "iosPullToRefresh": true,
+    "tabNavigation": {
+      "tabSelectionConfig": [
+        {
+          "id": "1",
+          "regex": ".*"
+        }
+      ],
+      "tabMenus": [
+        {
+          "id": "1",
+          "items": [
+            {
+              "label": "",
+              "icon": "fa-star",
+              "url": "http://123.206.106.195:3000/hot",
+              "subLinks": []
+            },
+            {
+              "url": "",
+              "label": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            },
+            {
+              "label": "",
+              "url": "",
+              "subLinks": []
+            }
+          ]
+        }
+      ],
+      "active": false
+    },
+    "sidebarNavigation": {
+      "menuSelectionConfig": {
+        "redirectLocations": [
+          {
+            "regex": null,
+            "menuName": "default",
+            "loggedIn": false
+          },
+          {
+            "regex": ".*",
+            "menuName": "default",
+            "loggedIn": true
+          }
+        ],
+        "testURL": null
+      },
+      "menus": [
+        {
+          "name": "default",
+          "active": true,
+          "items": [
+            {
+              "label": "热门",
+              "url": "http://123.206.106.195:3000/",
+              "subLinks": []
+            },
+            {
+              "label": "社会",
+              "url": "http://123.206.106.195:3000/society",
+              "subLinks": []
+            },
+            {
+              "label": "国内",
+              "url": "http://123.206.106.195:3000/domestic",
+              "subLinks": []
+            },
+            {
+              "label": "国际",
+              "url": "http://123.206.106.195:3000/global",
+              "subLinks": []
+            },
+            {
+              "label": "科技",
+              "url": "http://123.206.106.195:3000/technology",
+              "subLinks": []
+            },
+            {
+              "label": "经济",
+              "url": "http://123.206.106.195:3000/finance",
+              "subLinks": []
+            },
+            {
+              "label": "军事",
+              "url": "http://123.206.106.195:3000/war",
+              "subLinks": []
+            },
+            {
+              "label": "教育",
+              "url": "http://123.206.106.195:3000/education",
+              "subLinks": []
+            },
+            {
+              "label": "汽车",
+              "url": "http://123.206.106.195:3000/car",
+              "subLinks": []
+            },
+            {
+              "label": "游戏",
+              "url": "http://123.206.106.195:3000/game",
+              "subLinks": []
+            },
+            {
+              "label": "探索",
+              "url": "http://123.206.106.195:3000/discover",
+              "subLinks": []
+            },
+            {
+              "label": "娱乐",
+              "url": "http://123.206.106.195:3000/entertain",
+              "subLinks": []
+            },
+            {
+              "label": "时尚",
+              "url": "http://123.206.106.195:3000/fashion",
+              "subLinks": []
+            },
+            {
+              "label": "健康",
+              "url": "http://123.206.106.195:3000/health",
+              "subLinks": []
+            },
+            {
+              "label": "历史",
+              "url": "http://123.206.106.195:3000/history",
+              "subLinks": []
+            },
+            {
+              "label": "数码",
+              "url": "http://123.206.106.195:3000/mobile",
+              "subLinks": []
+            },
+            {
+              "label": "体育",
+              "url": "http://123.206.106.195:3000/sport",
+              "subLinks": []
+            },
+            {
+              "label": "旅游",
+              "url": "http://123.206.106.195:3000/travel",
+              "subLinks": []
+            }
+          ]
+        },
+        {
+          "name": "loggedIn",
+          "active": false,
+          "items": [
+            {
+              "label": "Sample Home",
+              "url": "http://123.206.106.195:3000//home",
+              "subLinks": []
+            },
+            {
+              "label": "Sample About",
+              "url": "http://123.206.106.195:3000//about",
+              "subLinks": []
+            }
+          ]
+        }
+      ]
+    },
+    "regexInternalExternal": {
+      "rules": [
+        {
+          "regex": "^(?!https?://).*",
+          "internal": false
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com/login.php.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com/dialog.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com/v1\\.0/.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com/oauth.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com/v2\\.0/.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com/checkpoint.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*facebook\\.com.*",
+          "internal": true
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*plus\\.google\\.com/share.*",
+          "internal": false
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*twitter\\.com/.*",
+          "internal": false
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*instagram\\.com/.*",
+          "internal": false
+        },
+        {
+          "regex": "https?://maps\\.google\\.com.*",
+          "internal": false
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*linkedin\\.com/.*",
+          "internal": false
+        },
+        {
+          "regex": "https?://([-\\w]+\\.)*google\\.com/maps/search/.*",
+          "internal": false
+        },
+        {
+          "regex": ".*",
+          "internal": true
+        }
+      ]
+    },
+    "navigationTitles": {
+      "titles": [
+        {}
+      ],
+      "active": false
+    },
+    "redirects": [],
+    "ignorePageFinishedRegexes": [],
+    "androidShowRefreshButton": false,
+    "iosShowRefreshButton": false,
+    "deepLinkDomains": [],
+    "navigationLevels": {
+      "levels": [
+        {}
+      ]
+    },
+    "toolbarNavigation": null
+  },
+  "styling": {
+    "transitionInteractiveDelayMax": 0.2,
+    "menuAnimationDuration": 0.15,
+    "iosLaunchImages": {},
+    "androidLaunchImages": {},
+    "androidShowSplash": true,
+    "disableAnimations": false,
+    "hideWebviewAlpha": 0.5,
+    "icon": "https://gonativeio.s3.amazonaws.com/uploads/w61qge5qnnt8u_1497863895371.png",
+    "iosHeaderImage": "images/logo1.png",
+    "showActionBar": true,
+    "showNavigationBar": true,
+    "iosSidebarFont": "Default",
+    "androidHideTitleInActionBar": false,
+    "navigationTitleImage": false,
+    "iosTheme": "light",
+    "androidTheme": "light",
+    "androidSidebarBackgroundColor": "#404040",
+    "androidSidebarForegroundColor": "#F7F7F7",
+    "androidActionBarBackgroundColor": "#bdbdbd",
+    "androidActionBarForegroundColor": "#000000",
+    "androidPullToRefreshColor": "#777777",
+    "androidAccentColor": "#009688",
+    "androidSidebarSeparatorColor": "#585858",
+    "androidTabBarBackgroundColor": "#337AD6",
+    "androidTabBarTextColor": "#000000",
+    "androidTabBarIndicatorColor": "#000000",
+    "iosTitleColor": "#333333",
+    "iosTintColor": "#0091fe",
+    "iosSidebarTextColor": "#333333",
+    "androidStatusBarBackgroundColor": "#909090"
+  },
+  "forms": {
+    "interceptForms": {
+      "forms": []
+    },
+    "search": {
+      "searchTemplateURL": "http://123.206.106.195:3000/search#search=",
+      "active": true
+    },
+    "loginConfig": {
+      "formInputs": [],
+      "formSelector": null,
+      "loginIsFirstPage": false
+    },
+    "signupConfig": {
+      "formInputs": [],
+      "active": false,
+      "formSelector": null
+    }
+  },
+  "permissions": {
+    "usesGeolocation": true
+  },
+  "publishing": {},
+  "performance": {
+    "webviewPools": [
+      {
+        "urls": [
+          {
+            "disown": "reload"
+          }
+        ]
+      }
+    ]
+  },
+  "services": {
+    "push": {
+      "active": false
+    },
+    "analytics": {
+      "active": false
+    },
+    "parse": {
+      "pushEnabled": false,
+      "active": false
+    },
+    "facebook": {
+      "active": false
+    },
+    "oneSignal": {
+      "applicationId": "dcb8847d-e8e0-4e65-b97c-6e1e140c51e8",
+      "active": true
+    },
+    "registration": {
+      "endpoints": [
+        {
+          "dataType": [
+            "parse",
+            "oneSignal"
+          ],
+          "urlRegex": null,
+          "url": null
+        }
+      ],
+      "active": false
+    }
+  }
+}

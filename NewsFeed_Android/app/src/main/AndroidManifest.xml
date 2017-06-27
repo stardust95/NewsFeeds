@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.gonative.android"
+    android:versionName="1.0.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- wifi state required by crosswalk -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+
+    <!-- WebRTC Audio and Video -->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO"/>-->
+    <!--<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>-->
+    <!--<uses-permission android:name="android.permission.CAMERA"/>-->
+
+    <!-- permissions for push messages -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="${applicationId}.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+
+    <application
+        android:name=".GoNativeApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:logo="@drawable/ic_actionbar"
+        android:theme="@style/GoNativeTheme.WithActionBar" >
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <activity
+            android:name="io.gonative.android.MainActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize">
+            <!--additional intent filters-->
+
+            <!--example: -->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW"></action>-->
+                <!--<category android:name="android.intent.category.DEFAULT"></category>-->
+                <!--<category android:name="android.intent.category.BROWSABLE"></category>-->
+                <!--<data android:scheme="http"></data>-->
+                <!--<data android:scheme="https"></data>-->
+                <!--<data android:host="gonative.io"></data>-->
+                <!--<data android:pathPrefix="/"></data>-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name="io.gonative.android.WebFormActivity"
+            android:label="@string/title_activity_web_form"
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:theme="@style/GoNativeTheme.WithActionBar"
+            android:configChanges="orientation|screenSize">
+        </activity>
+
+        <!-- Declaring FacebookActivity is only necessary for Login or Share, so it is not needed
+        if we are only using analytics. However, declaring it does not harm and removes a warning. -->
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
+        <!-- For file sharing without having to use external permissions. -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <!-- Disable default OneSignal handling -->
+        <meta-data android:name="com.onesignal.NotificationOpened.DEFAULT" android:value="DISABLE" />
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
